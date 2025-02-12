@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.electronic_journal.fragment.AuthorizationFragment"
+        android:label="Authorization"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/action_authorizationFragment_to_studentFragment"
+            app:destination="@id/studentFragment" />
+        <action
+            android:id="@+id/action_authorizationFragment_to_administratorFragment"
+            app:destination="@id/administratorFragment" />
+        <action
+            android:id="@+id/action_authorizationFragment_to_teacherFragment"
+            app:destination="@id/teacherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.electronic_journal.fragment.SignUpFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_authorizationFragment2"
+            app:destination="@id/authorizationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/studentFragment"
+        android:name="com.example.electronic_journal.fragment.entity.StudentFragment"
+        android:label="Student"
+        tools:layout="@layout/fragment_student" >
+        <action
+            android:id="@+id/action_studentFragment_to_gradebookFragment"
+            app:destination="@id/gradebookFragment" />
+        <action
+            android:id="@+id/action_studentFragment_to_personalDataStudentFragment"
+            app:destination="@id/personalDataStudentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/teacherFragment"
+        android:name="com.example.electronic_journal.fragment.entity.TeacherFragment"
+        android:label="Teacher"
+        tools:layout="@layout/fragment_teacher" >
+        <action
+            android:id="@+id/action_teacherFragment_to_teacherSubjectFragment"
+            app:destination="@id/teacherSubjectFragment" />
+        <action
+            android:id="@+id/action_teacherFragment_to_personalDataTeacherFragment"
+            app:destination="@id/personalDataTeacherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/administratorFragment"
+        android:name="com.example.electronic_journal.fragment.entity.AdministratorFragment"
+        android:label="Administrator"
+        tools:layout="@layout/fragment_administrator" />
+
+    <fragment
+        android:id="@+id/gradebookFragment"
+        android:name="com.example.electronic_journal.fragment.student.GradebookFragment"
+        android:label="Gradebook"
+        tools:layout="@layout/fragment_gradebook" />
+
+    <fragment
+        android:id="@+id/personalDataStudentFragment"
+        android:name="com.example.electronic_journal.fragment.student.PersonalDataStudentFragment"
+        android:label="Personal Data Student"
+        tools:layout="@layout/fragment_personal_data_student" />
+
+    <fragment
+        android:id="@+id/groupsStudyingSubjectFragment"
+        android:name="com.example.electronic_journal.fragment.teacher.GroupsStudyingSubjectFragment"
+        android:label="Groups Studying Subject"
+        tools:layout="@layout/fragment_groups_studying_subject" >
+        <action
+            android:id="@+id/action_groupsStudyingSubjectFragment_to_studentInGroupFragment"
+            app:destination="@id/studentInGroupFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personalDataTeacherFragment"
+        android:name="com.example.electronic_journal.fragment.teacher.PersonalDataTeacherFragment"
+        android:label="Personal Data Teacher"
+        tools:layout="@layout/fragment_personal_data_teacher" />
+
+    <fragment
+        android:id="@+id/studentInGroupFragment"
+        android:name="com.example.electronic_journal.fragment.teacher.StudentInGroupFragment"
+        android:label="Student In Group"
+        tools:layout="@layout/fragment_student_in_group" />
+
+    <fragment
+        android:id="@+id/teacherSubjectFragment"
+        android:name="com.example.electronic_journal.fragment.teacher.TeacherSubjectFragment"
+        android:label="Teacher Subject"
+        tools:layout="@layout/fragment_teacher_subject" >
+        <action
+            android:id="@+id/action_teacherSubjectFragment_to_groupsStudyingSubjectFragment"
+            app:destination="@id/groupsStudyingSubjectFragment" />
+    </fragment>
+</navigation>
