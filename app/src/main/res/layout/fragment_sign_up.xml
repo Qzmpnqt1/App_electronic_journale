@@ -1,143 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:background="@color/dark_background"
     tools:context=".fragment.SignUpFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="16dp">
 
+        <!-- Карточка с формой регистрации -->
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:layout_marginHorizontal="15dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="20dp"
-            app:cardBackgroundColor="@color/white">
+            app:cardBackgroundColor="@color/darkCardBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
-                android:padding="15dp">
+                android:orientation="vertical"
+                android:padding="20dp">
 
+                <!-- Заголовок -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Регистрация"
-                    android:textSize="36sp"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/darkAccent"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
+                <!-- Выбор типа пользователя -->
                 <RadioGroup
                     android:id="@+id/rgUserType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal">
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rbStudent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:text="Ученик"
-                        android:checked="true" />
+                        android:textColor="@color/white"
+                        app:buttonTint="@color/darkAccent" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rbTeacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Учитель" />
-
+                        android:layout_marginStart="16dp"
+                        android:text="Учитель"
+                        android:textColor="@color/white"
+                        app:buttonTint="@color/darkAccent" />
                 </RadioGroup>
 
-                <EditText
-                    android:id="@+id/edSurname"
+                <!-- Фамилия -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Фамилия"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
-                    android:layout_marginTop="8dp" />
-
-                <EditText
-                    android:id="@+id/edName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Имя"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
-                    android:layout_marginTop="8dp" />
-
-                <EditText
-                    android:id="@+id/edPatronymic"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Отчество"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
-                    android:layout_marginTop="8dp" />
-
-                <EditText
-                    android:id="@+id/edDateOfBirth"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Дата рождения"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:visibility="visible" />
+                    app:boxStrokeColor="@color/darkAccent">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edSurname"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Фамилия"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Имя -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Имя"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Отчество -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edPatronymic"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Отчество"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Дата рождения -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDateOfBirth"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edDateOfBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Дата рождения"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Заголовок для групп -->
                 <TextView
                     android:id="@+id/tvGroupDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Доступные группы:"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="8dp" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/edGroupId"
+                <!-- ID группы -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGroupId"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="ID группы"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/darkAccent">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edGroupId"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="ID группы"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Выбор предметов -->
                 <TextView
                     android:id="@+id/tvSubjects"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Выберите предметы"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -145,70 +191,96 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edittext" />
+                    android:background="@drawable/custom_edittext_dark" />
 
-                <EditText
-                    android:id="@+id/edEmail"
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Email"
-                    android:background="@drawable/custom_edittext"
-                    android:drawablePadding="8dp"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="#C0C0C0"
-                    android:layout_marginTop="8dp" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent">
 
-                <RelativeLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Email"
+                        android:padding="12dp"
+                        android:drawablePadding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Пароль -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent"
+                    app:endIconMode="password_toggle">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edPassword"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:hint="Пароль"
-                        android:background="@drawable/custom_edittext"
                         android:padding="12dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textColorHint="#C0C0C0" />
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <ImageView
-                        android:id="@+id/ivTogglePasswordVisibility"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:padding="8dp" />
-                </RelativeLayout>
+                <!-- Поле подтверждения пароля -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent"
+                    app:endIconMode="password_toggle">
 
-                <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Подтвердите пароль"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Кнопка регистрации -->
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
                     android:text="Зарегистрироваться"
-                    android:textSize="16sp"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/purple"
-                    android:layout_marginTop="30dp" />
+                    app:backgroundTint="@color/darkAccent"
+                    app:cornerRadius="8dp"
+                    app:iconGravity="end"
+                    app:iconTint="@color/white" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <!-- Ссылка для перехода на авторизацию -->
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txAutorization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Уже есть аккаунт? Войти"
-            android:textSize="14sp"
-            android:textColor="@color/purple"
-            android:padding="8dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            android:padding="8dp"
+            android:text="Уже есть аккаунт? Войти"
+            android:textColor="@color/darkAccent"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </ScrollView>

@@ -1,91 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/white"
+    android:background="@color/dark_background"
     tools:context=".fragment.AuthorizationFragment">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
-        app:cardBackgroundColor="@color/white"
-        android:background="@drawable/custom_edittext">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Карточка с формой авторизации -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="370dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:padding="15dp">
+            android:layout_marginTop="200dp"
+            android:layout_marginHorizontal="15dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="20dp"
+            app:cardBackgroundColor="@color/darkCardBackground">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Вход"
-                android:id="@+id/loginText"
-                android:textSize="36sp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/purple"/>
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <EditText
-                android:id="@+id/edEmail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_edittext"
-                android:drawablePadding="8dp"
-                android:hint="Email"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textColorHint="#C0C0C0"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"/>
+                <!-- Заголовок -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Вход"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkAccent"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edPassword"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_edittext"
-                android:drawablePadding="8dp"
-                android:hint="Пароль"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:textColorHint="#C0C0C0"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="20dp"/>
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:boxStrokeColor="@color/darkAccent">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/btLogin"
-                android:text="Войти"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/purple"
-                app:cornerRadius = "20dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Email"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/txSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Нет аккаунта? Зарегистрироваться"
-        android:textSize="14sp"
-        android:textAlignment="center"
-        android:textColor="@color/purple"
-        android:layout_marginBottom="20dp"/>
-</LinearLayout>
+                <!-- Пароль -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/darkAccent"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Пароль"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Кнопка входа -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Войти"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/darkAccent"
+                    app:cornerRadius="8dp"
+                    app:iconGravity="end"
+                    app:iconTint="@color/white" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Ссылка для перехода на регистрацию -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:padding="8dp"
+            android:text="Нет аккаунта? Зарегистрироваться"
+            android:textSize="14sp"
+            android:textColor="@color/darkAccent" />
+
+    </LinearLayout>
+</ScrollView>

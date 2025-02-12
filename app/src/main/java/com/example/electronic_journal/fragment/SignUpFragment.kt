@@ -1,7 +1,6 @@
 package com.example.electronic_journal.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +29,7 @@ class SignUpFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,106 +37,15 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvSubjects.visibility = View.GONE
-        binding.rvSubjects.visibility = View.GONE
-        binding.edDateOfBirth.visibility = View.VISIBLE
-        binding.tvGroupDetails.visibility = View.VISIBLE
-        binding.edGroupId.visibility = View.VISIBLE
+        // Начальные состояния UI - по умолчанию показываем поля для студента
+        showStudentFields()
 
         setupRecyclerView()
         loadSubjects()
         loadGroups()
 
         binding.btSignUp.setOnClickListener {
-            val name = binding.edName.text.toString().trim()
-            val surname = binding.edSurname.text.toString().trim()
-            val patronymic = binding.edPatronymic.text.toString().trim()
-            val email = binding.edEmail.text.toString().trim()
-            val password = binding.edPassword.text.toString().trim()
-
-            if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            when {
-                binding.rbStudent.isChecked -> {
-                    val dateOfBirth = binding.edDateOfBirth.text.toString().trim()
-                    val groupIdText = binding.edGroupId.text.toString().trim()
-
-                    if (dateOfBirth.isEmpty() || groupIdText.isEmpty()) {
-                        Toast.makeText(context, "Пожалуйста, заполните все поля для студента", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                    }
-
-                    val groupId = groupIdText.toIntOrNull()
-                    if (groupId == null) {
-                        Toast.makeText(context, "ID группы должно быть числом", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                    }
-
-                    val request = StudentRegistrationRequest(
-                        name = name,
-                        surname = surname,
-                        patronymic = patronymic,
-                        dateOfBirth = dateOfBirth,
-                        email = email,
-                        password = password,
-                        groupId = groupId
-                    )
-
-                    WebServerSingleton.getApiService(requireContext()).registerStudent(request)
-                        .enqueue(object : Callback<Void> {
-                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                if (response.isSuccessful) {
-                                    Toast.makeText(context, "Регистрация успешна", Toast.LENGTH_SHORT).show()
-                                    navigateToFragment(R.id.authorizationFragment)
-                                } else {
-                                    val errorMessage = response.errorBody()?.string()
-                                    Toast.makeText(context, "Ошибка регистрации: $errorMessage", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<Void>, t: Throwable) {
-                                Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                }
-
-                binding.rbTeacher.isChecked -> {
-                    if (selectedSubjects.isEmpty()) {
-                        Toast.makeText(context, "Пожалуйста, выберите хотя бы один предмет", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                    }
-
-                    val subjectIds = selectedSubjects.map { it.subjectId }
-                    val request = TeacherSignUpRequest(
-                        name = name,
-                        surname = surname,
-                        patronymic = patronymic,
-                        email = email,
-                        password = password,
-                        subjectIds = subjectIds
-                    )
-
-                    WebServerSingleton.getApiService(requireContext()).registerTeacher(request)
-                        .enqueue(object : Callback<Void> {
-                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                if (response.isSuccessful) {
-                                    Toast.makeText(context, "Регистрация успешна", Toast.LENGTH_SHORT).show()
-                                    navigateToFragment(R.id.authorizationFragment)
-                                } else {
-                                    val errorMessage = response.errorBody()?.string()
-                                    Toast.makeText(context, "Ошибка регистрации: $errorMessage", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<Void>, t: Throwable) {
-                                Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                }
-            }
+            registerUser()
         }
 
         binding.txAutorization.setOnClickListener {
@@ -146,22 +54,132 @@ class SignUpFragment : Fragment() {
 
         binding.rgUserType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.rbStudent -> {
-                    binding.tvSubjects.visibility = View.GONE
-                    binding.rvSubjects.visibility = View.GONE
-                    binding.edDateOfBirth.visibility = View.VISIBLE
-                    binding.tvGroupDetails.visibility = View.VISIBLE
-                    binding.edGroupId.visibility = View.VISIBLE
-                }
-                R.id.rbTeacher -> {
-                    binding.edDateOfBirth.visibility = View.GONE
-                    binding.tvGroupDetails.visibility = View.GONE
-                    binding.edGroupId.visibility = View.GONE
-                    binding.tvSubjects.visibility = View.VISIBLE
-                    binding.rvSubjects.visibility = View.VISIBLE
-                }
+                R.id.rbStudent -> showStudentFields()
+                R.id.rbTeacher -> showTeacherFields()
             }
         }
+    }
+
+    private fun registerUser() {
+        val name = binding.edName.text.toString().trim()
+        val surname = binding.edSurname.text.toString().trim()
+        val patronymic = binding.edPatronymic.text.toString().trim()
+        val email = binding.edEmail.text.toString().trim()
+        val password = binding.edPassword.text.toString().trim()
+        val confirmPassword = binding.edConfirmPassword.text.toString().trim()
+
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(context, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (password.length < 6) {
+            Toast.makeText(context, "Пароль должен содержать минимум 6 символов", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (password != confirmPassword) {
+            Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        when {
+            binding.rbStudent.isChecked -> registerStudent(name, surname, patronymic, email, password)
+            binding.rbTeacher.isChecked -> registerTeacher(name, surname, patronymic, email, password)
+        }
+    }
+
+    private fun registerStudent(name: String, surname: String, patronymic: String, email: String, password: String) {
+        val dateOfBirth = binding.edDateOfBirth.text.toString().trim()
+        val groupIdText = binding.edGroupId.text.toString().trim()
+
+        if (dateOfBirth.isEmpty() || groupIdText.isEmpty()) {
+            Toast.makeText(context, "Пожалуйста, заполните все поля для студента", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val groupId = groupIdText.toIntOrNull()
+        if (groupId == null) {
+            Toast.makeText(context, "ID группы должно быть числом", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val request = StudentRegistrationRequest(
+            name = name,
+            surname = surname,
+            patronymic = patronymic,
+            dateOfBirth = dateOfBirth,
+            email = email,
+            password = password,
+            groupId = groupId
+        )
+
+        WebServerSingleton.getApiService(requireContext()).registerStudent(request)
+            .enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    handleRegistrationResponse(response)
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun registerTeacher(name: String, surname: String, patronymic: String, email: String, password: String) {
+        if (selectedSubjects.isEmpty()) {
+            Toast.makeText(context, "Пожалуйста, выберите хотя бы один предмет", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val subjectIds = selectedSubjects.map { it.subjectId }
+        val request = TeacherSignUpRequest(
+            name = name,
+            surname = surname,
+            patronymic = patronymic,
+            email = email,
+            password = password,
+            subjectIds = subjectIds
+        )
+
+        WebServerSingleton.getApiService(requireContext()).registerTeacher(request)
+            .enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    handleRegistrationResponse(response)
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun handleRegistrationResponse(response: Response<Void>) {
+        if (response.isSuccessful) {
+            Toast.makeText(context, "Регистрация успешна", Toast.LENGTH_SHORT).show()
+            navigateToFragment(R.id.authorizationFragment)
+        } else {
+            val errorMessage = response.errorBody()?.string()
+            Toast.makeText(context, "Ошибка регистрации: $errorMessage", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showStudentFields() {
+        binding.tvSubjects.visibility = View.GONE
+        binding.rvSubjects.visibility = View.GONE
+        // Показываем родительские контейнеры для даты рождения и ID группы
+        binding.tilDateOfBirth.visibility = View.VISIBLE
+        binding.tvGroupDetails.visibility = View.VISIBLE
+        binding.tilGroupId.visibility = View.VISIBLE
+    }
+
+    private fun showTeacherFields() {
+        binding.tvSubjects.visibility = View.VISIBLE
+        binding.rvSubjects.visibility = View.VISIBLE
+        // Скрываем родительские контейнеры для даты рождения и ID группы
+        binding.tilDateOfBirth.visibility = View.GONE
+        binding.tvGroupDetails.visibility = View.GONE
+        binding.tilGroupId.visibility = View.GONE
     }
 
     private fun loadGroups() {
@@ -169,24 +187,16 @@ class SignUpFragment : Fragment() {
             override fun onResponse(call: Call<List<Group>>, response: Response<List<Group>>) {
                 if (response.isSuccessful) {
                     val groups = response.body()
-                    if (groups != null) {
-                        val sortedGroups = groups.sortedBy { it.name }
-                        val groupDetails = StringBuilder()
-                        for (group in sortedGroups) {
-                            groupDetails.append("ID: ${group.groupId}, Название: ${group.name}\n")
-                        }
-                        binding.tvGroupDetails.text = groupDetails.toString()
-                    } else {
-                        binding.tvGroupDetails.text = "Нет доступных групп"
-                    }
+                    val groupDetails = groups?.sortedBy { it.name }
+                        ?.joinToString("\n") { "ID: ${it.groupId}, Название: ${it.name}" }
+                        ?: "Нет доступных групп"
+                    binding.tvGroupDetails.text = groupDetails
                 } else {
-                    Log.e("loadGroups", "Ошибка: ${response.code()} - ${response.message()}")
                     Toast.makeText(context, "Ошибка загрузки групп", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Group>>, t: Throwable) {
-                Log.e("loadGroups", "Ошибка соединения: ${t.message}")
                 Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
             }
         })
@@ -196,10 +206,7 @@ class SignUpFragment : Fragment() {
         WebServerSingleton.getApiService(requireContext()).getAllSubjects().enqueue(object : Callback<List<Subject>> {
             override fun onResponse(call: Call<List<Subject>>, response: Response<List<Subject>>) {
                 if (response.isSuccessful) {
-                    val subjects = response.body()
-                    if (subjects != null) {
-                        subjectAdapter.updateSubjects(subjects)
-                    }
+                    response.body()?.let { subjectAdapter.updateSubjects(it) }
                 } else {
                     Toast.makeText(context, "Ошибка загрузки предметов", Toast.LENGTH_SHORT).show()
                 }
@@ -213,11 +220,7 @@ class SignUpFragment : Fragment() {
 
     private fun setupRecyclerView() {
         subjectAdapter = SubjectAdapter(mutableListOf()) { subject, isSelected ->
-            if (isSelected) {
-                selectedSubjects.add(subject)
-            } else {
-                selectedSubjects.remove(subject)
-            }
+            if (isSelected) selectedSubjects.add(subject) else selectedSubjects.remove(subject)
         }
         binding.rvSubjects.apply {
             layoutManager = LinearLayoutManager(context)
@@ -229,4 +232,3 @@ class SignUpFragment : Fragment() {
         findNavController().navigate(fragmentId)
     }
 }
-
