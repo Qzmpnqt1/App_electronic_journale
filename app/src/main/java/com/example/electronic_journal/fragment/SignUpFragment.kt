@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.electronic_journal.R
@@ -228,7 +229,17 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    // Функция для создания NavOptions с анимациями
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(R.anim.slide_in_left)
+            .setPopExitAnim(R.anim.slide_out_right)
+            .build()
+    }
+
     private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId)
+        findNavController().navigate(fragmentId, null, getNavOptions())
     }
 }

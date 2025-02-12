@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.electronic_journal.R
 import com.example.electronic_journal.databinding.FragmentAuthorizationBinding
@@ -25,7 +26,7 @@ class AuthorizationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAuthorizationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,35 +56,35 @@ class AuthorizationFragment : Fragment() {
             }
 
             val authRequest = AuthRequest(email, password)
-            val call = WebServerSingleton.getApiService(requireContext()).login(authRequest)
             Log.d("AuthorizationFragment", "JSON для отправки: $authRequest")
-            call.enqueue(object : Callback<AuthResponse> {
-                override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                    if (response.isSuccessful) {
-                        val authResponse = response.body()
-                        if (authResponse != null) {
-                            val token = authResponse.token
-                            val role = authResponse.role
+            WebServerSingleton.getApiService(requireContext()).login(authRequest)
+                .enqueue(object : Callback<AuthResponse> {
+                    override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                        if (response.isSuccessful) {
+                            val authResponse = response.body()
+                            if (authResponse != null) {
+                                val token = authResponse.token
+                                val role = authResponse.role
 
-                            with(sharedPref.edit()) {
-                                putString("token", token)
-                                putString("role", role)
-                                apply()
+                                with(sharedPref.edit()) {
+                                    putString("token", token)
+                                    putString("role", role)
+                                    apply()
+                                }
+                                redirectToRoleFragment(role)
+                            } else {
+                                Toast.makeText(context, "Ошибка обработки ответа", Toast.LENGTH_SHORT).show()
                             }
-                            redirectToRoleFragment(role)
                         } else {
-                            Toast.makeText(context, "Ошибка обработки ответа", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Неверный email или пароль", Toast.LENGTH_SHORT).show()
                         }
-                    } else {
-                        Toast.makeText(context, "Неверный email или пароль", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                    Log.e("AuthorizationFragment", "Ошибка соединения", t)
-                    Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                        Log.e("AuthorizationFragment", "Ошибка соединения", t)
+                        Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
     }
 
@@ -96,8 +97,18 @@ class AuthorizationFragment : Fragment() {
         }
     }
 
+    // Функция возвращает NavOptions с заданными анимациями
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(R.anim.slide_in_left)
+            .setPopExitAnim(R.anim.slide_out_right)
+            .build()
+    }
+
     private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId)
+        // Передаём NavOptions для программного задания анимаций
+        findNavController().navigate(fragmentId, null, getNavOptions())
     }
 }
-
