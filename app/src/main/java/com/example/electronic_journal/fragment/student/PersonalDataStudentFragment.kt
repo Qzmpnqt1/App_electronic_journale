@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.electronic_journal.R
 import com.example.electronic_journal.databinding.FragmentPersonalDataStudentBinding
 import com.example.electronic_journal.server.WebServerSingleton
 import com.example.electronic_journal.server.model.Student
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,15 +30,14 @@ class PersonalDataStudentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPersonalDataStudentBinding.inflate(inflater, container, false)
         fetchPersonalData()
 
-        // Обработчик клика по кнопке выхода
+        // При нажатии на кнопку выхода показываем диалог подтверждения
         binding.btLogout.setOnClickListener {
-            logout()
+            confirmLogout()
         }
-
         return binding.root
     }
 
@@ -47,8 +48,14 @@ class PersonalDataStudentFragment : Fragment() {
             override fun onResponse(call: Call<Student>, response: Response<Student>) {
                 if (response.isSuccessful) {
                     val student = response.body()
-                    student?.let {
-                        displayStudentData(it)
+                    if (student != null) {
+                        displayStudentData(student)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Ошибка загрузки данных студента",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
                     Toast.makeText(
@@ -73,6 +80,17 @@ class PersonalDataStudentFragment : Fragment() {
         binding.tvStudentEmail.text = "Email: ${student.email}"
     }
 
+    private fun confirmLogout() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Подтверждение выхода")
+            .setMessage("Вы уверены, что хотите выйти из аккаунта?")
+            .setPositiveButton("Да") { _, _ ->
+                logout()
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
+    }
+
     private fun logout() {
         val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
@@ -80,13 +98,21 @@ class PersonalDataStudentFragment : Fragment() {
             remove("role")
             apply()
         }
-
-        // Переход к фрагменту авторизации
         navigateToFragment(R.id.authorizationFragment)
     }
 
+    // Функция возвращает NavOptions с заданными анимациями
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_right)
+            .setPopExitAnim(R.anim.slide_out_left)
+            .build()
+    }
+
     private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId)
+        findNavController().navigate(fragmentId, null, getNavOptions())
     }
 
     override fun onDestroyView() {

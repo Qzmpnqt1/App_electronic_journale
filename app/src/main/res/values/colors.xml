@@ -9,8 +9,10 @@
     <color name="purple">#8692f7</color>
     <color name="red">#CD5C5C</color>
 
+
     <color name="dark_background">#121212</color>
     <color name="darkCardBackground">#1E1E1E</color>
     <color name="darkAccent">#BB86FC</color>
     <color name="white">#FFFFFF</color>
+
 </resources>
