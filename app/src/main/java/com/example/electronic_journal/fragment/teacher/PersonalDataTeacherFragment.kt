@@ -10,16 +10,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.electronic_journal.R
 import com.example.electronic_journal.databinding.FragmentPersonalDataTeacherBinding
 import com.example.electronic_journal.server.WebServerSingleton
 import com.example.electronic_journal.server.model.Teacher
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PersonalDataTeacherFragment : Fragment(R.layout.fragment_personal_data_teacher) {
+class PersonalDataTeacherFragment : Fragment() {
 
     private var _binding: FragmentPersonalDataTeacherBinding? = null
     private val binding get() = _binding!!
@@ -28,13 +30,13 @@ class PersonalDataTeacherFragment : Fragment(R.layout.fragment_personal_data_tea
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPersonalDataTeacherBinding.inflate(inflater, container, false)
         fetchPersonalData()
 
-        // Обработчик клика по кнопке выхода
+        // При нажатии на кнопку выхода показываем диалог подтверждения
         binding.btLogout.setOnClickListener {
-            logout()
+            confirmLogout()
         }
 
         return binding.root
@@ -51,14 +53,7 @@ class PersonalDataTeacherFragment : Fragment(R.layout.fragment_personal_data_tea
                         displayTeacherData(it)
                     }
                 } else {
-                    // Логирование детальной информации об ошибке
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("PersonalDataTeacher", "Ошибка загрузки данных учителя: ${response.code()} - ${response.message()} - $errorBody")
-                    Toast.makeText(
-                        requireContext(),
-                        "Ошибка загрузки данных учителя",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Ошибка загрузки данных учителя", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -74,7 +69,17 @@ class PersonalDataTeacherFragment : Fragment(R.layout.fragment_personal_data_tea
             "ФИО: ${teacher.surname} ${teacher.name} ${teacher.patronymic ?: ""}".trim()
         binding.tvTeacherID.text = "ID Преподавателя: ${teacher.teacherId}"
         binding.tvTeacherEmail.text = "Email: ${teacher.email}"
-        // Если хотите отобразить роль или предметы, добавьте соответствующие TextView
+    }
+
+    private fun confirmLogout() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Подтверждение выхода")
+            .setMessage("Вы уверены, что хотите выйти из аккаунта?")
+            .setPositiveButton("Да") { _, _ ->
+                logout()
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
     }
 
     private fun logout() {
@@ -84,13 +89,21 @@ class PersonalDataTeacherFragment : Fragment(R.layout.fragment_personal_data_tea
             remove("role")
             apply()
         }
-
-        // Переход к фрагменту авторизации
         navigateToFragment(R.id.authorizationFragment)
     }
 
+    // Функция для создания NavOptions с анимацией перехода
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_right)
+            .setPopExitAnim(R.anim.slide_out_left)
+            .build()
+    }
+
     private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId)
+        findNavController().navigate(fragmentId, null, getNavOptions())
     }
 
     override fun onDestroyView() {

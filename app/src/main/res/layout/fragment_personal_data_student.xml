@@ -57,7 +57,7 @@
                         android:id="@+id/tvStudentFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ФИО: Иванов Иван Иванович"
+                        android:hint="@string/ФИО"
                         android:textSize="18sp"
                         android:textColor="@color/white"
                         android:paddingBottom="12dp"/>
@@ -66,7 +66,7 @@
                         android:id="@+id/tvStudentID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ID Студента: 12345"
+                        android:hint="@string/ID_Сущности"
                         android:textSize="18sp"
                         android:textColor="@color/white"
                         android:paddingBottom="12dp"/>
@@ -75,7 +75,7 @@
                         android:id="@+id/tvStudentEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email: student@example.com"
+                        android:hint="@string/Email"
                         android:textSize="18sp"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -83,7 +83,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Кнопка выхода, расположенная в правом верхнем углу -->
+    <!-- Кнопка выхода -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btLogout"
         android:layout_width="56dp"
@@ -92,7 +92,7 @@
         app:icon="@drawable/ic_logout"
         app:iconTint="@android:color/white"
         app:backgroundTint="@color/darkCardBackground"
-        android:contentDescription="Выйти из аккаунта"
+        android:contentDescription="@string/logout_from_account"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>

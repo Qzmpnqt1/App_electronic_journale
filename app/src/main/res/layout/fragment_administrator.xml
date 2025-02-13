@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
             android:paddingBottom="16dp"
-            android:text="Администратор"
+            android:text="@string/administrator"
             android:textColor="@color/purple"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
-                    android:text="Добавить группу"
+                    android:text="@string/add_group"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -55,7 +55,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/custom_edittext"
                     android:textSize="16sp"
-                    android:hint="Название группы"
+                    android:hint="@string/name_group"
                     android:padding="12dp"
                     android:textColor="@color/black" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Выберите предметы"
+                    android:text="@string/select_subjects"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -80,7 +80,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/purple"
-                    android:text="Добавить"
+                    android:text="@string/add"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -103,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
-                    android:text="Удалить группу"
+                    android:text="@string/delete_group"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="ID и Название группы: (пусто)"
+                    android:text="@string/id_and_name_group"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -123,7 +123,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext_delete"
-                    android:hint="ID группы"
+                    android:hint="@string/id_group"
                     android:textSize="16sp"
                     android:padding="12dp"
                     android:textColor="@color/black" />
@@ -134,7 +134,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/red"
-                    android:text="Удалить"
+                    android:text="@string/delete"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
-                    android:text="Добавить предмет"
+                    android:text="@string/add_subjects"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -169,7 +169,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/custom_edittext"
-                    android:hint="Название предмета"
+                    android:hint="@string/name_subjects"
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:textColor="@color/black" />
@@ -180,7 +180,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/custom_edittext"
-                    android:hint="Номер курса (1, 2, 3 или 4)"
+                    android:hint="@string/number_course"
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:textColor="@color/black" />
@@ -191,7 +191,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/purple"
-                    android:text="Добавить"
+                    android:text="@string/add"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -214,7 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
-                    android:text="Удалить предмет"
+                    android:text="@string/delete_subjects"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -224,7 +224,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="ID и Название предмета: (пусто)"
+                    android:text="@string/id_and_name_subjects"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -234,7 +234,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext_delete"
-                    android:hint="ID предмета"
+                    android:hint="@string/id_subjects"
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:textColor="@color/black" />
@@ -245,7 +245,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/red"
-                    android:text="Удалить"
+                    android:text="@string/delete"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -270,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
-                    android:text="Удалить студента из группы"
+                    android:text="@string/remove_student_from_group"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -279,7 +279,7 @@
                     android:id="@+id/tvGroupList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Список групп: (здесь будут ID и названия)"
+                    android:text="@string/list_of_groups_ID_and_Names"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_marginTop="8dp" />
@@ -290,7 +290,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
-                    android:hint="ID группы"
+                    android:hint="@string/id_group"
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:textColor="@color/black" />
@@ -301,7 +301,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/purple"
-                    android:text="Загрузить студентов"
+                    android:text="@string/load_students"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
@@ -309,7 +309,7 @@
                     android:id="@+id/tvStudentList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Список студентов: (здесь будут ID и ФИО)"
+                    android:text="@string/list_of_groups_ID_and_ФИО"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_marginTop="10dp" />
@@ -320,7 +320,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext_delete"
-                    android:hint="ID студента"
+                    android:hint="@string/id_student"
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:textColor="@color/black" />
@@ -331,7 +331,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/red"
-                    android:text="Удалить студента"
+                    android:text="@string/delete_student"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -343,7 +343,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/red"
-            android:text="Выйти из аккаунта"
+            android:text="@string/logout_from_account"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
