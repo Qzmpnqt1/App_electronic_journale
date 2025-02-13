@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.electronic_journal.R
@@ -19,6 +20,7 @@ import com.example.electronic_journal.databinding.FragmentAdministratorBinding
 import com.example.electronic_journal.server.autorization.GroupDTO
 import com.example.electronic_journal.server.autorization.SubjectDTO
 import com.example.electronic_journal.server.model.Student
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,14 +47,7 @@ class AdministratorFragment : Fragment() {
         loadGroups()
 
         binding.btLogout.setOnClickListener {
-            val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            with(sharedPref.edit()) {
-                remove("token")
-                remove("role")
-                apply()
-            }
-
-            navigateToFragment(R.id.authorizationFragment)
+            confirmLogout() // Изменено: вызов диалога подтверждения
         }
 
         binding.btAddGroup.setOnClickListener {
@@ -297,7 +292,38 @@ class AdministratorFragment : Fragment() {
         }
     }
 
+    private fun confirmLogout() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Подтверждение выхода")
+            .setMessage("Вы уверены, что хотите выйти из аккаунта?")
+            .setPositiveButton("Да") { _, _ ->
+                logout()
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
+    }
+
+    private fun logout() {
+        val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            remove("token")
+            remove("role")
+            apply()
+        }
+        navigateToFragment(R.id.authorizationFragment)
+    }
+
+    // Функция для создания NavOptions с анимациями
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_right)
+            .setPopExitAnim(R.anim.slide_out_left)
+            .build()
+    }
+
     private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId)
+        findNavController().navigate(fragmentId, null, getNavOptions())
     }
 }

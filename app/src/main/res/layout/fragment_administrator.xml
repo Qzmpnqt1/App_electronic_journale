@@ -1,351 +1,437 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_background"
     tools:context=".fragment.entity.AdministratorFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="15dp">
+    <!-- Основной контент в ScrollView -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:paddingBottom="16dp"
-            android:text="@string/administrator"
-            android:textColor="@color/purple"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="8dp">
+            android:orientation="vertical"
+            android:gravity="center">
 
-            <LinearLayout
+            <!-- Заголовок фрагмента -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/administrator"
+                android:textColor="@color/darkAccent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Карточка добавления группы -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/darkCardBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/add_group"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/edGroupName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edittext"
-                    android:textSize="16sp"
-                    android:hint="@string/name_group"
-                    android:padding="12dp"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_group"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/select_subjects"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSubjects"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edittext" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edGroupName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/name_group"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/btAddGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/purple"
-                    android:text="@string/add"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/select_subjects"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="8dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSubjects"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_edittext_dark" />
 
-            <LinearLayout
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btAddGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/add"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/darkAccent"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Карточка удаления группы -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/darkCardBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/delete_group"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvGroupDetails"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/id_and_name_group"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/edDeleteGroupName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext_delete"
-                    android:hint="@string/id_group"
-                    android:textSize="16sp"
-                    android:padding="12dp"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete_group"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btDeleteGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/red"
-                    android:text="@string/delete"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/tvGroupDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/id_and_name_group"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-            <LinearLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edDeleteGroupName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/id_group"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btDeleteGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/delete"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/red"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Карточка добавления предметов -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/darkCardBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/add_subjects"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/edSubjectName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="@string/name_subjects"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_subjects"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edSubjectCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="@string/number_course"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-                <Button
-                    android:id="@+id/btAddSubject"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/purple"
-                    android:text="@string/add"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edSubjectName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/name_subjects"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-            <LinearLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edSubjectCourse"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/number_course"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btAddSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/add"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/darkAccent"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Карточка удаления предметов -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/darkCardBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/delete_subjects"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvSubjectDetails"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/id_and_name_subjects"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/edDeleteSubjectName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext_delete"
-                    android:hint="@string/id_subjects"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete_subjects"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btDeleteSubject"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/red"
-                    android:text="@string/delete"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/tvSubjectDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/id_and_name_subjects"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="48dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="8dp">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-            <LinearLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edDeleteSubjectName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/id_subjects"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btDeleteSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/delete"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/red"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Карточка управления студентами -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/darkCardBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/remove_student_from_group"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvGroupList"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/list_of_groups_ID_and_Names"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/edGroupIdForStudents"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="@string/id_group"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/remove_student_from_group"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btLoadStudents"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/purple"
-                    android:text="@string/load_students"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tvGroupList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/list_of_groups_ID_and_Names"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tvStudentList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/list_of_groups_ID_and_ФИО"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginTop="10dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
 
-                <EditText
-                    android:id="@+id/edStudentIdToDelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext_delete"
-                    android:hint="@string/id_student"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edGroupIdForStudents"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/id_group"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/btDeleteStudent"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/red"
-                    android:text="@string/delete_student"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btLoadStudents"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/load_students"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/darkAccent"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
 
-        <Button
-            android:id="@+id/btLogout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/red"
-            android:text="@string/logout_from_account"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tvStudentList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/list_of_groups_ID_and_ФИО"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-    </LinearLayout>
-</ScrollView>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:boxStrokeColor="@color/darkAccent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edStudentIdToDelete"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/id_student"
+                            android:textColor="@color/white"
+                            android:textColorHint="#9E9E9E"
+                            android:textSize="16sp"
+                            android:padding="12dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btDeleteStudent"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/delete_student"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/red"
+                        app:cornerRadius="8dp"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Кнопка выхода внутри прокручиваемой области -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_gravity="center"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@android:color/white"
+                android:text="@string/logout_from_account"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/darkCardBackground"
+                app:cornerRadius="8dp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="24dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/darkAccent"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
