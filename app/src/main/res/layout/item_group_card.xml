@@ -17,7 +17,7 @@
             android:id="@+id/tvGroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ИКБО-01-21"
+            android:hint="@string/number_group"
             android:textSize="18sp"
             android:layout_gravity="center"
             android:textColor="@color/purple" />

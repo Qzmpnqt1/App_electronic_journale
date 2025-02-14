@@ -18,7 +18,7 @@
             android:id="@+id/tvSubjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Предмет: Математика"
+            android:hint="@string/subject"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -28,7 +28,7 @@
             android:id="@+id/tvGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Оценка: 5"
+            android:hint="@string/grade"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:paddingBottom="4dp" />

@@ -3,9 +3,9 @@
     <item
         android:id="@+id/nav_personal_data"
         android:icon="@drawable/ic_person"
-        android:title="Данные" />
+        android:title="@string/data" />
     <item
         android:id="@+id/nav_gradebook"
         android:icon="@drawable/ic_grade"
-        android:title="Зачетка" />
+        android:title="@string/gradebook" />
 </menu>

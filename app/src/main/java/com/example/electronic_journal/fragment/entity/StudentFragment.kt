@@ -13,11 +13,14 @@ import com.example.electronic_journal.fragment.student.PersonalDataStudentFragme
 class StudentFragment : Fragment() {
 
     private lateinit var binding: FragmentStudentBinding
+    private var currentFragment: Fragment? = null
+    private val personalDataFragment = PersonalDataStudentFragment()
+    private val gradebookFragment = GradebookFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentStudentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,8 +30,11 @@ class StudentFragment : Fragment() {
 
         setupBottomNavigation()
 
+        // Восстановление фрагмента при повороте экрана
         if (savedInstanceState == null) {
-            loadFragment(PersonalDataStudentFragment())
+            showFragment(personalDataFragment)
+        } else {
+            currentFragment = childFragmentManager.findFragmentById(R.id.fragmentContainer)
         }
     }
 
@@ -36,11 +42,11 @@ class StudentFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_personal_data -> {
-                    loadFragment(PersonalDataStudentFragment())
+                    showFragment(personalDataFragment)
                     true
                 }
                 R.id.nav_gradebook -> {
-                    loadFragment(GradebookFragment())
+                    showFragment(gradebookFragment)
                     true
                 }
                 else -> false
@@ -48,9 +54,19 @@ class StudentFragment : Fragment() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+    private fun showFragment(fragment: Fragment) {
+        if (fragment == currentFragment) return
+
+        val transaction = childFragmentManager.beginTransaction()
+        currentFragment?.let { transaction.hide(it) }
+
+        if (!fragment.isAdded) {
+            transaction.add(R.id.fragmentContainer, fragment)
+        } else {
+            transaction.show(fragment)
+        }
+
+        transaction.commit()
+        currentFragment = fragment
     }
 }

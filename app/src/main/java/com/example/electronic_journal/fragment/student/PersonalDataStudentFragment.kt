@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.electronic_journal.R
@@ -25,6 +29,7 @@ class PersonalDataStudentFragment : Fragment() {
 
     private var _binding: FragmentPersonalDataStudentBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: StudentProfileViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -32,13 +37,27 @@ class PersonalDataStudentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPersonalDataStudentBinding.inflate(inflater, container, false)
-        fetchPersonalData()
+        setupObservers()
 
-        // При нажатии на кнопку выхода показываем диалог подтверждения
+        if (viewModel.studentData.value == null) {
+            fetchPersonalData()
+        }
+
         binding.btLogout.setOnClickListener {
             confirmLogout()
         }
         return binding.root
+    }
+
+    private fun setupObservers() {
+        viewModel.studentData.observe(viewLifecycleOwner) { student ->
+            student?.let {
+                displayStudentData(it)
+            } ?: run {
+                binding.tvStudentID.text = ""
+                binding.tvStudentEmail.text = ""
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -47,28 +66,23 @@ class PersonalDataStudentFragment : Fragment() {
         apiService.getPersonalDataStudent().enqueue(object : Callback<Student> {
             override fun onResponse(call: Call<Student>, response: Response<Student>) {
                 if (response.isSuccessful) {
-                    val student = response.body()
-                    if (student != null) {
-                        displayStudentData(student)
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Ошибка загрузки данных студента",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    viewModel.setStudentData(response.body())
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Ошибка загрузки данных студента",
+                        "Ошибка загрузки данных: ${response.code()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
             override fun onFailure(call: Call<Student>, t: Throwable) {
-                Log.e("PersonalDataFragment", "Ошибка сети: ${t.message}")
-                Toast.makeText(requireContext(), "Ошибка сети", Toast.LENGTH_SHORT).show()
+                Log.e("PersonalDataFragment", "Network error: ${t.message}")
+                Toast.makeText(
+                    requireContext(),
+                    "Ошибка сети: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -98,10 +112,10 @@ class PersonalDataStudentFragment : Fragment() {
             remove("role")
             apply()
         }
+        viewModel.clearData()
         navigateToFragment(R.id.authorizationFragment)
     }
 
-    // Функция возвращает NavOptions с заданными анимациями
     private fun getNavOptions(): NavOptions {
         return NavOptions.Builder()
             .setEnterAnim(R.anim.slide_in_left)
@@ -118,5 +132,18 @@ class PersonalDataStudentFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+class StudentProfileViewModel : ViewModel() {
+    private val _studentData = androidx.lifecycle.MutableLiveData<Student?>()
+    val studentData: androidx.lifecycle.LiveData<Student?> get() = _studentData
+
+    fun setStudentData(student: Student?) {
+        _studentData.value = student
+    }
+
+    fun clearData() {
+        _studentData.value = null
     }
 }

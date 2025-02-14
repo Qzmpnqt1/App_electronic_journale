@@ -18,7 +18,7 @@
             android:id="@+id/tvStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Иванов Иван Иванович"
+            android:hint="@string/full_name_student"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black" />
@@ -28,7 +28,7 @@
             android:id="@+id/tvStudentID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID: 3213213"
+            android:hint="@string/number_id"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_marginTop="4dp" />

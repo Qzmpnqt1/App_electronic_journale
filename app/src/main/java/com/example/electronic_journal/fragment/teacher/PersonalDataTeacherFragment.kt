@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.electronic_journal.R
@@ -25,6 +27,7 @@ class PersonalDataTeacherFragment : Fragment() {
 
     private var _binding: FragmentPersonalDataTeacherBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: TeacherProfileViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -32,14 +35,27 @@ class PersonalDataTeacherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPersonalDataTeacherBinding.inflate(inflater, container, false)
-        fetchPersonalData()
+        setupObservers()
 
-        // При нажатии на кнопку выхода показываем диалог подтверждения
+        if (viewModel.teacherData.value == null) {
+            fetchPersonalData()
+        }
+
         binding.btLogout.setOnClickListener {
             confirmLogout()
         }
-
         return binding.root
+    }
+
+    private fun setupObservers() {
+        viewModel.teacherData.observe(viewLifecycleOwner, Observer { teacher ->
+            teacher?.let {
+                displayTeacherData(it)
+            } ?: run {
+                binding.tvTeacherID.text = ""
+                binding.tvTeacherEmail.text = ""
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,18 +64,23 @@ class PersonalDataTeacherFragment : Fragment() {
         apiService.getPersonalDataTeacher().enqueue(object : Callback<Teacher> {
             override fun onResponse(call: Call<Teacher>, response: Response<Teacher>) {
                 if (response.isSuccessful) {
-                    val teacher = response.body()
-                    teacher?.let {
-                        displayTeacherData(it)
-                    }
+                    viewModel.setTeacherData(response.body())
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных учителя", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Ошибка загрузки данных: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<Teacher>, t: Throwable) {
-                Log.e("PersonalDataTeacher", "Ошибка сети: ${t.message}")
-                Toast.makeText(requireContext(), "Ошибка сети", Toast.LENGTH_SHORT).show()
+                Log.e("PersonalDataTeacher", "Network error: ${t.message}")
+                Toast.makeText(
+                    requireContext(),
+                    "Ошибка сети: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -89,10 +110,10 @@ class PersonalDataTeacherFragment : Fragment() {
             remove("role")
             apply()
         }
+        viewModel.clearData()
         navigateToFragment(R.id.authorizationFragment)
     }
 
-    // Функция для создания NavOptions с анимацией перехода
     private fun getNavOptions(): NavOptions {
         return NavOptions.Builder()
             .setEnterAnim(R.anim.slide_in_left)
@@ -109,5 +130,18 @@ class PersonalDataTeacherFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+class TeacherProfileViewModel : androidx.lifecycle.ViewModel() {
+    private val _teacherData = androidx.lifecycle.MutableLiveData<Teacher?>()
+    val teacherData: androidx.lifecycle.LiveData<Teacher?> get() = _teacherData
+
+    fun setTeacherData(teacher: Teacher?) {
+        _teacherData.value = teacher
+    }
+
+    fun clearData() {
+        _teacherData.value = null
     }
 }

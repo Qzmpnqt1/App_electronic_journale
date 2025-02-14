@@ -62,8 +62,9 @@ dependencies {
     implementation(libs.rxjava)
     implementation(libs.rxandroid)
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx.v262)
+    implementation (libs.androidx.lifecycle.livedata.ktx.v262)
+    implementation (libs.androidx.fragment.ktx.v161)
 
     // Тесты
     testImplementation(libs.junit)

@@ -30,7 +30,7 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Личные данные"
+                android:text="@string/personal_data"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="@color/darkAccent"

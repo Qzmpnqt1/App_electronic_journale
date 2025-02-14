@@ -13,11 +13,14 @@ import com.example.electronic_journal.fragment.teacher.TeacherSubjectFragment
 class TeacherFragment : Fragment() {
 
     private lateinit var binding: FragmentTeacherBinding
+    private var currentFragment: Fragment? = null
+    private val personalDataFragment = PersonalDataTeacherFragment()
+    private val gradeFragment = TeacherSubjectFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTeacherBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,7 +31,9 @@ class TeacherFragment : Fragment() {
         setupBottomNavigation()
 
         if (savedInstanceState == null) {
-            loadFragment(PersonalDataTeacherFragment())
+            showFragment(personalDataFragment)
+        } else {
+            currentFragment = childFragmentManager.findFragmentById(R.id.fragmentContainer)
         }
     }
 
@@ -36,11 +41,11 @@ class TeacherFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_personal_data -> {
-                    loadFragment(PersonalDataTeacherFragment())
+                    showFragment(personalDataFragment)
                     true
                 }
                 R.id.nav_grade -> {
-                    loadFragment(TeacherSubjectFragment())
+                    showFragment(gradeFragment)
                     true
                 }
                 else -> false
@@ -48,10 +53,19 @@ class TeacherFragment : Fragment() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+    private fun showFragment(fragment: Fragment) {
+        if (fragment == currentFragment) return
+
+        val transaction = childFragmentManager.beginTransaction()
+        currentFragment?.let { transaction.hide(it) }
+
+        if (!fragment.isAdded) {
+            transaction.add(R.id.fragmentContainer, fragment)
+        } else {
+            transaction.show(fragment)
+        }
+
+        transaction.commit()
+        currentFragment = fragment
     }
 }
-
