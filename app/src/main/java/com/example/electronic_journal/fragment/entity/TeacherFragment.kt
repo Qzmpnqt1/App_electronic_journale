@@ -14,8 +14,6 @@ class TeacherFragment : Fragment() {
 
     private lateinit var binding: FragmentTeacherBinding
     private var currentFragment: Fragment? = null
-    private val personalDataFragment = PersonalDataTeacherFragment()
-    private val gradeFragment = TeacherSubjectFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +25,11 @@ class TeacherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupBottomNavigation()
 
         if (savedInstanceState == null) {
-            showFragment(personalDataFragment)
+            // При первом запуске показываем PersonalDataTeacherFragment
+            showFragment(PersonalDataTeacherFragment())
         } else {
             currentFragment = childFragmentManager.findFragmentById(R.id.fragmentContainer)
         }
@@ -41,11 +39,15 @@ class TeacherFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_personal_data -> {
-                    showFragment(personalDataFragment)
+                    // Каждый раз создаём новый экземпляр PersonalDataTeacherFragment,
+                    // чтобы гарантировать его подгрузку с актуальными данными.
+                    showFragment(PersonalDataTeacherFragment())
                     true
                 }
                 R.id.nav_grade -> {
-                    showFragment(gradeFragment)
+                    // При выборе раздела "Выставить оценки" создаём новый экземпляр TeacherSubjectFragment.
+                    // Это гарантирует, что фрагмент не является "удалённым" из FragmentManager.
+                    showFragment(TeacherSubjectFragment())
                     true
                 }
                 else -> false
@@ -53,18 +55,46 @@ class TeacherFragment : Fragment() {
         }
     }
 
+    /**
+     * Функция для показа целевого фрагмента с заданной анимацией.
+     *
+     * При переходе к PersonalDataTeacherFragment (из любого оценочного фрагмента)
+     * используется анимация перехода "влево" (новый фрагмент появляется слева, предыдущий уходит вправо).
+     *
+     * При переходе из PersonalDataTeacherFragment к оценочным фрагментам – анимация "вправо"
+     * (новый фрагмент появляется справа, а PersonalDataTeacherFragment уходит влево).
+     */
     private fun showFragment(fragment: Fragment) {
+        // Если уже выбранный фрагмент совпадает с новым по типу – никаких изменений не требуется.
+        if (currentFragment != null && currentFragment!!::class == fragment::class) return
+
         val transaction = childFragmentManager.beginTransaction()
-        if (fragment.isAdded) {
-            transaction.show(fragment)
+
+        // Определяем анимацию перехода
+        if (fragment is PersonalDataTeacherFragment &&
+            (currentFragment is TeacherSubjectFragment)
+        ) {
+            transaction.setCustomAnimations(
+                R.anim.slide_in_left,    // PersonalDataTeacherFragment появляется слева
+                R.anim.slide_out_right   // Текущий оценочный фрагмент уходит вправо
+            )
+        } else if (currentFragment is PersonalDataTeacherFragment &&
+            (fragment is TeacherSubjectFragment)
+        ) {
+            transaction.setCustomAnimations(
+                R.anim.slide_in_right,   // Новый оценочный фрагмент появляется справа
+                R.anim.slide_out_left    // PersonalDataTeacherFragment уходит влево
+            )
         } else {
-            transaction.add(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
+            // В остальных случаях используем стандартные анимации
+            transaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
         }
-        childFragmentManager.fragments.forEach {
-            if (it != fragment && it.isAdded) {
-                transaction.hide(it)
-            }
-        }
+
+        // Используем replace, чтобы гарантировать полное создание представления нового фрагмента
+        transaction.replace(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
         transaction.commit()
         currentFragment = fragment
     }

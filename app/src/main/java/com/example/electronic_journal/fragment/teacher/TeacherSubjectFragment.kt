@@ -1,6 +1,8 @@
 package com.example.electronic_journal.fragment.teacher
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +46,15 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
             binding.searchInputLayout.editText?.setText(searchQuery)
         }
 
+        // Добавляем TextWatcher для обновления переменной searchQuery при изменении текста
+        binding.searchInputLayout.editText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchQuery = s.toString()
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
+
         // Получаем ApiService через WebServerSingleton
         apiService = WebServerSingleton.getApiService(requireContext())
 
@@ -64,9 +75,9 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
             }
         })
 
-        // Устанавливаем обработчик нажатия на иконку поиска
+        // Обработчик нажатия на иконку поиска
         binding.searchInputLayout.setEndIconOnClickListener {
-            searchQuery = binding.searchInputLayout.editText?.text.toString().trim()
+            // Теперь searchQuery уже обновлён через TextWatcher
             if (searchQuery.isNotEmpty()) {
                 searchSubject(searchQuery)
             } else {
@@ -74,7 +85,7 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
             }
         }
 
-        // Устанавливаем обработчик нажатия на кнопку перезагрузки
+        // Обработчик нажатия на кнопку перезагрузки
         binding.btnReload.setOnClickListener {
             loadSubjects(allSubjects)
         }
@@ -106,6 +117,7 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
                 val groupsFragment = GroupsStudyingSubjectFragment.newInstance(subject)
                 fragmentManager?.beginTransaction()
                     ?.replace(R.id.fragmentContainer, groupsFragment)
+                    ?.addToBackStack(null)
                     ?.commit()
             }
 
@@ -123,10 +135,11 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
         }
     }
 
+    // Реализация поиска с использованием filter для выбора всех подходящих предметов
     private fun searchSubject(query: String) {
-        val foundSubject = allSubjects.find { it.name.contains(query, ignoreCase = true) }
-        if (foundSubject != null) {
-            loadSubjects(setOf(foundSubject))
+        val foundSubjects = allSubjects.filter { it.name.contains(query, ignoreCase = true) }
+        if (foundSubjects.isNotEmpty()) {
+            loadSubjects(foundSubjects.toSet())
         } else {
             Toast.makeText(context, "Предмет не найден", Toast.LENGTH_SHORT).show()
         }

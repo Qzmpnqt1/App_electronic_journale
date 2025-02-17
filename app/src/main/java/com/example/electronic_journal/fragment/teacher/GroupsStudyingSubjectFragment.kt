@@ -1,12 +1,15 @@
 package com.example.electronic_journal.fragment.teacher
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.example.electronic_journal.R
 import com.example.electronic_journal.databinding.FragmentGroupsStudyingSubjectBinding
@@ -24,10 +27,12 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
     private lateinit var apiService: ApiService
     private lateinit var subject: Subject
 
+    private var allGroups: List<Group> = emptyList()
+    private var searchQuery: String = ""
+
     companion object {
         private const val ARG_SUBJECT = "arg_subject"
 
-        // Создание нового экземпляра фрагмента с аргументами
         fun newInstance(subject: Subject): GroupsStudyingSubjectFragment {
             val fragment = GroupsStudyingSubjectFragment()
             val bundle = Bundle().apply {
@@ -42,7 +47,6 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Инициализация binding
         binding = FragmentGroupsStudyingSubjectBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,18 +54,29 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Получаем аргумент (предмет) из Bundle
+        if (savedInstanceState != null) {
+            searchQuery = savedInstanceState.getString("SEARCH_QUERY", "")
+            binding.searchInputLayout.editText?.setText(searchQuery)
+        }
+
+        binding.searchInputLayout.editText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchQuery = s.toString()
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
+
         subject = arguments?.getParcelable(ARG_SUBJECT) ?: return
 
-        // Получаем ApiService через WebServerSingleton
         apiService = WebServerSingleton.getApiService(requireContext())
 
-        // Запрашиваем данные о группах для выбранного предмета
         apiService.getGroupsForSubject(subject.subjectId).enqueue(object : Callback<List<Group>> {
             override fun onResponse(call: Call<List<Group>>, response: Response<List<Group>>) {
                 if (response.isSuccessful) {
                     Log.d("Groups", "Ответ получен: ${response.body()}")
-                    loadGroups(response.body()!!)
+                    allGroups = response.body()!!
+                    loadGroups(allGroups)
                 } else {
                     Log.e("Groups", "Ошибка: ${response.code()} - ${response.message()}")
                     Toast.makeText(context, "Ошибка получения групп", Toast.LENGTH_SHORT).show()
@@ -73,31 +88,70 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
                 Toast.makeText(context, "Ошибка сети", Toast.LENGTH_SHORT).show()
             }
         })
+
+        binding.searchInputLayout.setEndIconOnClickListener {
+            if (searchQuery.isNotEmpty()) {
+                searchGroup(searchQuery)
+            } else {
+                Toast.makeText(context, "Введите название группы", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnReload.setOnClickListener {
+            loadGroups(allGroups)
+        }
+
+        // Обработчик кнопки "Назад"
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("SEARCH_QUERY", searchQuery)
     }
 
     private fun loadGroups(groups: List<Group>) {
-        // Очищаем контейнер перед добавлением
         binding.groupsContainer.removeAllViews()
 
-        // Для каждой группы создаем карточку
-        for (group in groups) {
-            val cardView = layoutInflater.inflate(R.layout.item_group_card, binding.groupsContainer, false)
+        val constraintSet = ConstraintSet()
 
+        for ((index, group) in groups.withIndex()) {
+            val cardView = layoutInflater.inflate(R.layout.item_group_card, binding.groupsContainer, false)
+            cardView.id = View.generateViewId()
             val groupNameTextView = cardView.findViewById<TextView>(R.id.tvGroupName)
             groupNameTextView.text = group.name
 
-            // Обработчик клика на группу
             cardView.setOnClickListener {
-                // Переход на фрагмент с подгруженными студентами
                 val fragment = StudentInGroupFragment.newInstance(group.groupId, subject.subjectId)
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)  // контейнер фрагмента
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
                     .commit()
             }
 
             binding.groupsContainer.addView(cardView)
+
+            constraintSet.clone(binding.groupsContainer)
+            if (index == 0) {
+                constraintSet.connect(cardView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 16)
+            } else {
+                val previousCard = binding.groupsContainer.getChildAt(index - 1)
+                constraintSet.connect(cardView.id, ConstraintSet.TOP, previousCard.id, ConstraintSet.BOTTOM, 16)
+            }
+            constraintSet.connect(cardView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16)
+            constraintSet.connect(cardView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 16)
+            constraintSet.applyTo(binding.groupsContainer)
+        }
+    }
+
+    private fun searchGroup(query: String) {
+        val foundGroups = allGroups.filter { it.name.contains(query, ignoreCase = true) }
+        if (foundGroups.isNotEmpty()) {
+            loadGroups(foundGroups)
+        } else {
+            Toast.makeText(context, "Группа не найдена", Toast.LENGTH_SHORT).show()
         }
     }
 }
-
-

@@ -65,4 +65,5 @@
     <string name="subjects">Предметы</string>
     <string name="search_subjects">Поиск предметов...</string>
     <string name="view_groups">Группы</string>
+    <string name="groups">Группы</string>
 </resources>

@@ -74,8 +74,14 @@ class SignUpFragment : Fragment() {
             return
         }
 
+        // Проверка домена электронной почты
+        if (!(email.endsWith("@gmail.com", ignoreCase = true) || email.endsWith("@mail.ru", ignoreCase = true))) {
+            Toast.makeText(context, "Почта на @gmail.com или @mail.ru", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (password.length < 6) {
-            Toast.makeText(context, "Пароль должен содержать минимум 6 символов", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Пароль из минимум 6 символов", Toast.LENGTH_SHORT).show()
             return
         }
 
