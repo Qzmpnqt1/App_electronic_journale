@@ -75,7 +75,7 @@
                         android:id="@+id/tvTeacherEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Email"
+                        android:hint="@string/email"
                         android:textSize="18sp"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -87,7 +87,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp"
-                android:layout_marginBottom="30dp"
                 android:layout_gravity="center"
                 app:icon="@drawable/ic_logout"
                 app:iconTint="@android:color/white"

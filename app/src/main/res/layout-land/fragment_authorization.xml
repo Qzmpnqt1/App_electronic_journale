@@ -11,35 +11,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <!-- Пустой View для создания отступа сверху -->
-        <View
-            android:id="@+id/topSpacer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.35" />
+        android:padding="15dp">
 
         <!-- Карточка с формой авторизации -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="12dp"
             app:cardBackgroundColor="@color/darkCardBackground"
-            app:layout_constraintTop_toBottomOf="@id/topSpacer"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.97">
+            app:layout_constraintWidth_percent="0.6">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <!-- Заголовок -->
                 <TextView
@@ -49,7 +39,7 @@
                     android:text="@string/login"
                     android:textAlignment="center"
                     android:textColor="@color/darkAccent"
-                    android:textSize="36sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +51,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:boxStrokeColor="@color/darkAccent"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
@@ -70,12 +59,12 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edEmail"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:hint="@string/email"
-                        android:padding="12dp"
+                        android:padding="8dp"
                         android:textColor="@color/white"
                         android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Пароль -->
@@ -85,7 +74,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/emailLayout"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,25 +82,25 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edPassword"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:hint="@string/password"
-                        android:padding="12dp"
+                        android:padding="8dp"
                         android:textColor="@color/white"
                         android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Кнопка входа -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btLogin"
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="24dp"
                     android:text="@string/Login"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/darkAccent"
-                    app:cornerRadius="8dp"
+                    app:cornerRadius="6dp"
                     app:layout_constraintTop_toBottomOf="@id/passwordLayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -120,16 +108,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Ссылка для перехода на регистрацию -->
+        <!-- Ссылка для регистрации -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:padding="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/do_not_have_an_account_register"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/darkAccent"
             app:layout_constraintTop_toBottomOf="@id/cardView"
             app:layout_constraintStart_toStartOf="parent"

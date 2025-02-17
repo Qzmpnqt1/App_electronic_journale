@@ -62,4 +62,7 @@
     <string name="gradebook">Зачетка</string>
     <string name="data">Данные</string>
     <string name="give_grade">Выставить оценки</string>
+    <string name="subjects">Предметы</string>
+    <string name="search_subjects">Поиск предметов...</string>
+    <string name="view_groups">Группы</string>
 </resources>

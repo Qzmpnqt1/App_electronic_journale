@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_background"
-    tools:context=".fragment.student.PersonalDataStudentFragment">
+    tools:context=".fragment.teacher.PersonalDataTeacherFragment">
 
     <!-- Основной контент в ScrollView -->
     <ScrollView
@@ -16,69 +16,81 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="30dp"
-            android:gravity="center_horizontal">
+            android:padding="5dp">
 
             <!-- Заголовок страницы -->
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_data"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="@color/darkAccent"
-                android:gravity="center"
-                android:layout_marginTop="180dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:paddingVertical="16dp"/>
 
-            <!-- Карточка с информацией студента -->
+            <!-- Карточка с информацией учителя -->
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground">
+                app:cardBackgroundColor="@color/darkCardBackground"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/tvStudentFullName"
+                        android:id="@+id/tvTeacherFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/ФИО"
                         android:textSize="18sp"
                         android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:paddingBottom="12dp"/>
 
                     <TextView
-                        android:id="@+id/tvStudentID"
+                        android:id="@+id/tvTeacherID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/ID_Сущности"
                         android:textSize="18sp"
                         android:textColor="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/tvTeacherFullName"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:paddingBottom="12dp"/>
 
                     <TextView
-                        android:id="@+id/tvStudentEmail"
+                        android:id="@+id/tvTeacherEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
                         android:textSize="18sp"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/tvTeacherID"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <!-- Кнопка выхода внутри прокручиваемой области -->
@@ -86,8 +98,11 @@
                 android:id="@+id/btLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="180dp"
-                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:icon="@drawable/ic_logout"
                 app:iconTint="@android:color/white"
                 app:iconGravity="textEnd"
@@ -97,7 +112,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/darkAccent"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,17 +54,17 @@ class TeacherFragment : Fragment() {
     }
 
     private fun showFragment(fragment: Fragment) {
-        if (fragment == currentFragment) return
-
         val transaction = childFragmentManager.beginTransaction()
-        currentFragment?.let { transaction.hide(it) }
-
-        if (!fragment.isAdded) {
-            transaction.add(R.id.fragmentContainer, fragment)
-        } else {
+        if (fragment.isAdded) {
             transaction.show(fragment)
+        } else {
+            transaction.add(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
         }
-
+        childFragmentManager.fragments.forEach {
+            if (it != fragment && it.isAdded) {
+                transaction.hide(it)
+            }
+        }
         transaction.commit()
         currentFragment = fragment
     }

@@ -21,7 +21,7 @@ class AuthInterceptor(private val context: Context) : Interceptor {
 }
 
 object WebServerSingleton {
-    private const val WEB_SRV_URL = "http://192.168.0.91:8080/" // Проверьте адрес
+    private const val WEB_SRV_URL = "http://192.168.0.67:8080/" // Проверьте адрес
 
     fun getApiService(context: Context): ApiService {
         // Создаем перехватчик для авторизации
