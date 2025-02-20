@@ -12,14 +12,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.electronic_journal.R
-import com.example.electronic_journal.server.WebServerSingleton
-import com.example.electronic_journal.server.model.Group
-import com.example.electronic_journal.server.model.Subject
 import com.example.electronic_journal.adapter.SubjectAdapter
 import com.example.electronic_journal.databinding.FragmentAdministratorBinding
+import com.example.electronic_journal.server.WebServerSingleton
 import com.example.electronic_journal.server.autorization.GroupDTO
 import com.example.electronic_journal.server.autorization.SubjectDTO
+import com.example.electronic_journal.server.model.Group
 import com.example.electronic_journal.server.model.Student
+import com.example.electronic_journal.server.model.Subject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +34,7 @@ class AdministratorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAdministratorBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,7 +47,7 @@ class AdministratorFragment : Fragment() {
         loadGroups()
 
         binding.btLogout.setOnClickListener {
-            confirmLogout() // Изменено: вызов диалога подтверждения
+            confirmLogout() // Диалог подтверждения выхода
         }
 
         binding.btAddGroup.setOnClickListener {
@@ -85,13 +85,17 @@ class AdministratorFragment : Fragment() {
         }
 
         binding.btDeleteGroup.setOnClickListener {
-            val groupId = binding.edDeleteGroupName.text.toString().trim()
-            if (groupId.isEmpty()) {
+            val groupIdStr = binding.edDeleteGroupName.text.toString().trim()
+            if (groupIdStr.isEmpty()) {
                 Toast.makeText(context, "Введите ID группы для удаления", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            WebServerSingleton.getApiService(requireContext()).deleteGroup(groupId.toInt()).enqueue(object : Callback<Void> {
+            val groupIdInt = groupIdStr.toIntOrNull()
+            if (groupIdInt == null) {
+                Toast.makeText(context, "Введите корректный числовой ID группы", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            WebServerSingleton.getApiService(requireContext()).deleteGroup(groupIdInt).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         Toast.makeText(context, "Группа успешно удалена", Toast.LENGTH_SHORT).show()
@@ -148,13 +152,17 @@ class AdministratorFragment : Fragment() {
         }
 
         binding.btDeleteSubject.setOnClickListener {
-            val subjectId = binding.edDeleteSubjectName.text.toString().trim()
-            if (subjectId.isEmpty()) {
+            val subjectIdStr = binding.edDeleteSubjectName.text.toString().trim()
+            if (subjectIdStr.isEmpty()) {
                 Toast.makeText(context, "Введите ID предмета для удаления", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            WebServerSingleton.getApiService(requireContext()).deleteSubject(subjectId.toInt()).enqueue(object : Callback<Void> {
+            val subjectIdInt = subjectIdStr.toIntOrNull()
+            if (subjectIdInt == null) {
+                Toast.makeText(context, "Введите корректный числовой ID предмета", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            WebServerSingleton.getApiService(requireContext()).deleteSubject(subjectIdInt).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         Toast.makeText(context, "Предмет удалён", Toast.LENGTH_SHORT).show()
@@ -171,17 +179,21 @@ class AdministratorFragment : Fragment() {
         }
 
         binding.btLoadStudents.setOnClickListener {
-            val groupId = binding.edGroupIdForStudents.text.toString().trim()
-            if (groupId.isEmpty()) {
+            val groupIdStr = binding.edGroupIdForStudents.text.toString().trim()
+            if (groupIdStr.isEmpty()) {
                 Toast.makeText(context, "Введите ID группы", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            WebServerSingleton.getApiService(requireContext()).getStudentsByGroupId(groupId.toInt()).enqueue(object : Callback<List<Student>> {
+            val groupIdInt = groupIdStr.toIntOrNull()
+            if (groupIdInt == null) {
+                Toast.makeText(context, "Введите корректный числовой ID группы", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            WebServerSingleton.getApiService(requireContext()).getStudentsByGroupId(groupIdInt).enqueue(object : Callback<List<Student>> {
                 override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                     if (response.isSuccessful) {
                         val students = response.body()
-                        if (students != null && students.isNotEmpty()) {
+                        if (!students.isNullOrEmpty()) {
                             val sortedStudents = students.sortedBy { it.surname }
                             val studentDetails = sortedStudents.joinToString("\n") { "ID: ${it.studentId}, ${it.surname} ${it.name}" }
                             binding.tvStudentList.text = studentDetails
@@ -192,7 +204,6 @@ class AdministratorFragment : Fragment() {
                         Toast.makeText(context, "Ошибка загрузки студентов", Toast.LENGTH_SHORT).show()
                     }
                 }
-
                 override fun onFailure(call: Call<List<Student>>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
                 }
@@ -200,13 +211,17 @@ class AdministratorFragment : Fragment() {
         }
 
         binding.btDeleteStudent.setOnClickListener {
-            val studentId = binding.edStudentIdToDelete.text.toString().trim()
-            if (studentId.isEmpty()) {
+            val studentIdStr = binding.edStudentIdToDelete.text.toString().trim()
+            if (studentIdStr.isEmpty()) {
                 Toast.makeText(context, "Введите ID студента для удаления", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            WebServerSingleton.getApiService(requireContext()).removeStudentFromGroup(studentId.toInt()).enqueue(object : Callback<Void> {
+            val studentIdInt = studentIdStr.toIntOrNull()
+            if (studentIdInt == null) {
+                Toast.makeText(context, "Введите корректный числовой ID студента", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            WebServerSingleton.getApiService(requireContext()).removeStudentFromGroup(studentIdInt).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         Toast.makeText(context, "Студент удалён из группы", Toast.LENGTH_SHORT).show()
@@ -215,7 +230,6 @@ class AdministratorFragment : Fragment() {
                         Toast.makeText(context, "Ошибка удаления студента", Toast.LENGTH_SHORT).show()
                     }
                 }
-
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
                 }
@@ -230,7 +244,9 @@ class AdministratorFragment : Fragment() {
                     val subjects = response.body()
                     if (subjects != null) {
                         subjectAdapter.updateSubjects(subjects)
-                        val subjectDetails = subjects.joinToString("\n") { "ID: ${it.subjectId}, Название: ${it.name}, Курс: ${it.course}" }
+                        val subjectDetails = subjects.joinToString("\n") {
+                            "ID: ${it.subjectId}, Название: ${it.name}, Курс: ${it.course}"
+                        }
                         binding.tvSubjectDetails.text = subjectDetails
                     } else {
                         binding.tvSubjectDetails.text = "Нет доступных предметов"

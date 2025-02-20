@@ -1,6 +1,6 @@
 package com.example.electronic_journal.fragment.student
 
-import android.os.Bundle
+/*import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ class GradebookFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var gradeEntries: List<GradeEntryDTO> = emptyList()
-    private lateinit var adapter: GradeAdapter
+    //private lateinit var adapter: GradeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +35,9 @@ class GradebookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Инициализация RecyclerView
-        adapter = GradeAdapter(gradeEntries)
+        //adapter = GradeAdapter(gradeEntries)
         binding.rvGradebook.layoutManager = LinearLayoutManager(context)
-        binding.rvGradebook.adapter = adapter
+        //binding.rvGradebook.adapter = adapter
 
         // Получаем зачетку для текущего студента
         val apiService = WebServerSingleton.getApiService(requireContext())
@@ -47,7 +47,7 @@ class GradebookFragment : Fragment() {
                     val gradebook = response.body()
                     gradebook?.let {
                         gradeEntries = it.gradeEntries
-                        adapter.updateData(gradeEntries)
+                        //adapter.updateData(gradeEntries)
                     }
                 } else {
                     Toast.makeText(requireContext(), "В зачетке нет оценок", Toast.LENGTH_SHORT).show()
@@ -64,7 +64,7 @@ class GradebookFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
+}*/
 
 
 

@@ -118,14 +118,24 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
         val constraintSet = ConstraintSet()
 
         for ((index, group) in groups.withIndex()) {
-            val cardView = layoutInflater.inflate(R.layout.item_group_card, binding.groupsContainer, false)
+            // Используем универсальную карточку для группы
+            val cardView = layoutInflater.inflate(R.layout.item_name_card, binding.groupsContainer, false)
             cardView.id = View.generateViewId()
-            val groupNameTextView = cardView.findViewById<TextView>(R.id.tvGroupName)
-            groupNameTextView.text = group.name
 
+            // Получаем TextView и устанавливаем название группы
+            val nameTextView = cardView.findViewById<TextView>(R.id.tvName)
+            nameTextView.text = group.name
+
+            // Обработка нажатия на карточку – переход к фрагменту со студентами выбранной группы
             cardView.setOnClickListener {
-                val fragment = StudentInGroupFragment.newInstance(group.groupId, subject.subjectId)
+                val fragment = StudentInGroupFragment.newInstance(group.groupId, subject.subjectId, subject.name)
                 parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit()
@@ -133,6 +143,7 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
 
             binding.groupsContainer.addView(cardView)
 
+            // Устанавливаем ограничения для карточки
             constraintSet.clone(binding.groupsContainer)
             if (index == 0) {
                 constraintSet.connect(cardView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 16)

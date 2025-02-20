@@ -25,9 +25,10 @@ class SubjectAdapter(
 
     override fun getItemCount(): Int = subjects.size
 
+    // Обновляем список предметов, сортируя их по имени в алфавитном порядке
     fun updateSubjects(newSubjects: List<Subject>) {
         subjects.clear()
-        subjects.addAll(newSubjects.sortedBy { it.name }) // Сортировка по имени в алфавитном порядке
+        subjects.addAll(newSubjects.sortedBy { it.name })
         selectedSubjects.clear() // Очищаем состояния выбранных предметов
         notifyDataSetChanged()
     }

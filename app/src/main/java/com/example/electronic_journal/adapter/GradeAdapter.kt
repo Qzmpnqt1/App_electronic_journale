@@ -1,6 +1,6 @@
 package com.example.electronic_journal.adapter
 
-import android.view.LayoutInflater
+/*import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electronic_journal.databinding.ItemGradeEntryBinding
@@ -33,5 +33,5 @@ class GradeAdapter(private var gradeEntries: List<GradeEntryDTO>) :
             binding.tvGrade.text = "Оценка: ${gradeEntry.grade}"
         }
     }
-}
+}*/
 

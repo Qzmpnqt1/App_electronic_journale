@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_Name">SchoolApp</string>
     <string-array name="grades_array">
         <item>2</item>
         <item>3</item>

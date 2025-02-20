@@ -105,20 +105,27 @@ class TeacherSubjectFragment : Fragment(R.layout.fragment_teacher_subject) {
 
         // Для каждого предмета создаем карточку
         for ((index, subject) in subjects.withIndex()) {
-            val cardView = layoutInflater.inflate(R.layout.item_subject_card, binding.subjectsContainer, false)
+            // Используем новый layout для универсальной карточки
+            val cardView = layoutInflater.inflate(R.layout.item_name_card, binding.subjectsContainer, false)
             cardView.id = View.generateViewId()
 
-            val subjectNameTextView = cardView.findViewById<TextView>(R.id.tvSubjectName)
-            subjectNameTextView.text = subject.name
+            // Получаем универсальный TextView и заполняем название предмета
+            val nameTextView = cardView.findViewById<TextView>(R.id.tvName)
+            nameTextView.text = subject.name
 
             // Обработка нажатия на карточку
             cardView.setOnClickListener {
-                // Переход к фрагменту с группами для выбранного предмета
                 val groupsFragment = GroupsStudyingSubjectFragment.newInstance(subject)
-                fragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragmentContainer, groupsFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                    .replace(R.id.fragmentContainer, groupsFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
 
             binding.subjectsContainer.addView(cardView)

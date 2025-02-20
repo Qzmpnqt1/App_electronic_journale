@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,10 +12,10 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,28 +27,28 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:text="@string/administrator"
                 android:textColor="@color/darkAccent"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="25dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Карточка добавления группы -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardAddGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/darkCardBackground"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="24dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintWidth_percent="0.95">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -61,13 +60,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/add_group"
-                        android:textColor="@color/white"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilGroupName"
@@ -76,19 +75,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvAddGroup"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvAddGroup">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edGroupName"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/name_group"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -99,9 +98,9 @@
                         android:text="@string/select_subjects"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/tilGroupName"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilGroupName" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvSubjects"
@@ -109,9 +108,9 @@
                         android:layout_height="200dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/custom_edittext_dark"
-                        app:layout_constraintTop_toBottomOf="@id/tvSelectSubjects"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvSelectSubjects" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btAddGroup"
@@ -123,9 +122,9 @@
                         app:backgroundTint="@color/darkAccent"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/rvSubjects"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/rvSubjects" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -135,14 +134,14 @@
                 android:id="@+id/cardDeleteGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/darkCardBackground"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground"
-                app:layout_constraintTop_toBottomOf="@id/cardAddGroup"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="24dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardAddGroup"
+                app:layout_constraintWidth_percent="0.95">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -154,13 +153,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/delete_group"
-                        android:textColor="@color/white"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvGroupDetails"
@@ -170,9 +169,9 @@
                         android:text="@string/id_and_name_group"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/tvDeleteGroup"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvDeleteGroup" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilDeleteGroupName"
@@ -181,19 +180,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvGroupDetails"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvGroupDetails">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edDeleteGroupName"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/id_group"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -206,9 +205,9 @@
                         app:backgroundTint="@color/red"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tilDeleteGroupName"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilDeleteGroupName" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -218,14 +217,14 @@
                 android:id="@+id/cardAddSubject"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/darkCardBackground"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground"
-                app:layout_constraintTop_toBottomOf="@id/cardDeleteGroup"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="24dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardDeleteGroup"
+                app:layout_constraintWidth_percent="0.95">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -237,13 +236,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/add_subjects"
-                        android:textColor="@color/white"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilSubjectName"
@@ -252,19 +251,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvAddSubject"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvAddSubject">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edSubjectName"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/name_subjects"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -274,19 +273,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tilSubjectName"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tilSubjectName">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edSubjectCourse"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/number_course"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -299,9 +298,9 @@
                         app:backgroundTint="@color/darkAccent"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tilSubjectCourse"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilSubjectCourse" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -311,14 +310,14 @@
                 android:id="@+id/cardDeleteSubject"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/darkCardBackground"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground"
-                app:layout_constraintTop_toBottomOf="@id/cardAddSubject"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="24dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardAddSubject"
+                app:layout_constraintWidth_percent="0.95">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -330,13 +329,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/delete_subjects"
-                        android:textColor="@color/white"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvSubjectDetails"
@@ -346,9 +345,9 @@
                         android:text="@string/id_and_name_subjects"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/tvDeleteSubject"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvDeleteSubject" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilDeleteSubjectName"
@@ -357,19 +356,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvSubjectDetails"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvSubjectDetails">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edDeleteSubjectName"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/id_subjects"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -382,9 +381,9 @@
                         app:backgroundTint="@color/red"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tilDeleteSubjectName"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilDeleteSubjectName" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -394,14 +393,14 @@
                 android:id="@+id/cardManageStudents"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/darkCardBackground"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/darkCardBackground"
-                app:layout_constraintTop_toBottomOf="@id/cardDeleteSubject"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="24dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardDeleteSubject"
+                app:layout_constraintWidth_percent="0.95">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -413,13 +412,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/remove_student_from_group"
-                        android:textColor="@color/white"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvGroupList"
@@ -429,9 +428,9 @@
                         android:text="@string/list_of_groups_ID_and_Names"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/tvManageStudents"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvManageStudents" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilGroupIdForStudents"
@@ -440,19 +439,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvGroupList"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvGroupList">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edGroupIdForStudents"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/id_group"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -465,9 +464,9 @@
                         app:backgroundTint="@color/darkAccent"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tilGroupIdForStudents"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilGroupIdForStudents" />
 
                     <TextView
                         android:id="@+id/tvStudentList"
@@ -477,9 +476,9 @@
                         android:text="@string/list_of_groups_ID_and_ФИО"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/btLoadStudents"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/btLoadStudents" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilStudentIdToDelete"
@@ -488,19 +487,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:boxStrokeColor="@color/darkAccent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStudentList"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tvStudentList">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edStudentIdToDelete"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/id_student"
+                            android:padding="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="#9E9E9E"
-                            android:textSize="16sp"
-                            android:padding="12dp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -513,9 +512,9 @@
                         app:backgroundTint="@color/red"
                         app:cornerRadius="8dp"
                         app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tilStudentIdToDelete"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tilStudentIdToDelete" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -523,25 +522,25 @@
             <!-- Кнопка выхода внутри прокручиваемой области -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btLogout"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
                 android:layout_gravity="center"
-                app:icon="@drawable/ic_logout"
-                app:iconTint="@android:color/white"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
                 android:text="@string/logout_from_account"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/darkCardBackground"
                 app:cornerRadius="8dp"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="24dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/darkAccent"
-                app:layout_constraintTop_toBottomOf="@id/cardManageStudents"
-                app:layout_constraintStart_toStartOf="parent"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardManageStudents"
+                app:strokeColor="@color/darkAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

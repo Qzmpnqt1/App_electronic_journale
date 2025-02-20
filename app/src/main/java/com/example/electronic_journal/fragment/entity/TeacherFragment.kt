@@ -55,15 +55,6 @@ class TeacherFragment : Fragment() {
         }
     }
 
-    /**
-     * Функция для показа целевого фрагмента с заданной анимацией.
-     *
-     * При переходе к PersonalDataTeacherFragment (из любого оценочного фрагмента)
-     * используется анимация перехода "влево" (новый фрагмент появляется слева, предыдущий уходит вправо).
-     *
-     * При переходе из PersonalDataTeacherFragment к оценочным фрагментам – анимация "вправо"
-     * (новый фрагмент появляется справа, а PersonalDataTeacherFragment уходит влево).
-     */
     private fun showFragment(fragment: Fragment) {
         // Если уже выбранный фрагмент совпадает с новым по типу – никаких изменений не требуется.
         if (currentFragment != null && currentFragment!!::class == fragment::class) return

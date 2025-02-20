@@ -1,36 +1,44 @@
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="6dp">
+    app:cardElevation="2dp"
+    app:strokeColor="@color/surface_variant"
+    app:strokeWidth="1dp"
+    android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground">
 
         <!-- ФИО студента -->
         <TextView
             android:id="@+id/tvStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/full_name_student"
+            android:text="@string/full_name_student"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black" />
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textColor="?attr/colorOnSurface"
+            android:maxLines="2"
+            android:ellipsize="end"/>
 
         <!-- ID студента -->
         <TextView
             android:id="@+id/tvStudentID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/number_id"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
+            android:text="@string/number_id"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
