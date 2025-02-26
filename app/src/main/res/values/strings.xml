@@ -42,8 +42,8 @@
     <string name="do_not_have_an_account_register">Нет аккаунта? Зарегистрироваться</string>
     <string name="personal_data">Личные данные</string>
     <string name="registration">Регистрация</string>
-    <string name="student">Ученик</string>
-    <string name="teacher">Учитель</string>
+    <string name="student">Студент</string>
+    <string name="teacher">Преподаватель</string>
     <string name="surname">Фамилия</string>
     <string name="name">Имя</string>
     <string name="patronymic">Отчество</string>
@@ -67,4 +67,25 @@
     <string name="view_groups">Группы</string>
     <string name="groups">Группы</string>
     <string name="students">Студенты</string>
+    <string name="add_grade">Выставление оценки</string>
+    <string name="student_and_subject">Студент: Иванов Иван Иванович\nПредмет: Математика</string>
+    <string name="choose_grade">Выберите оценку</string>
+    <string name="save">Сохранить</string>
+    <string name="back">Назад</string>
+    <string name="search">Поиск</string>
+    <string name="ask_any_question">Задайте любой вопрос</string>
+    <string name="ask_question_AI">Задать вопрос ИИ</string>
+    <string name="enter_request">Введите запрос</string>
+    <string name="date_of_birthday">Дата рождения</string>
+    <string name="name_subject">Название предмета</string>
+    <string name="winter_session_4">Зимняя сессия: 4</string>
+    <string name="summer_session_5">Летняя сессия: 5</string>
+    <string name="no_grade">Оценки нет</string>
+
+    <string name="admin_search">Панель администратора</string>
+    <string name="search_subtitle">Используйте поиск для получения информации из базы данных</string>
+    <string name="search_button">Найти</string>
+    <string name="search_results">Результаты поиска</string>
+    <string name="copy">Копировать</string>
+    <string name="share">Поделиться</string>
 </resources>

@@ -61,7 +61,19 @@
         android:id="@+id/administratorFragment"
         android:name="com.example.electronic_journal.fragment.entity.AdministratorFragment"
         android:label="Administrator"
-        tools:layout="@layout/fragment_administrator" />
+        tools:layout="@layout/fragment_administrator" >
+        <!-- Добавляем действие перехода в фрагмент поиска -->
+        <action
+            android:id="@+id/action_administratorFragment_to_administratorSearchFragment"
+            app:destination="@id/administratorSearchFragment" />
+    </fragment>
+
+    <!-- Новый фрагмент поиска -->
+    <fragment
+        android:id="@+id/administratorSearchFragment"
+        android:name="com.example.electronic_journal.fragment.administrator.AdministratorSearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_administrator_search" />
 
     <fragment
         android:id="@+id/gradebookFragment"

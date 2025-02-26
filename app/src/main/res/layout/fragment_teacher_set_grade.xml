@@ -5,46 +5,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.teacher.TeacherSetGradeFragment"
+    android:background="#FF121212"
     android:padding="16dp"
-    android:background="#FF121212">
+    tools:context=".fragment.teacher.TeacherSetGradeFragment">
 
-    <!-- Заголовок -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выставление оценки"
-        android:textSize="24sp"
-        android:textColor="#FFBB86FC"
+        android:text="@string/add_grade"
+        android:textSize="26sp"
+        android:textColor="@color/darkAccent"
         android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="50dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvStudentInfo"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <!-- Информация о выбранном студенте и предмете -->
     <TextView
         android:id="@+id/tvStudentInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Студент: Иванов Иван Иванович\nПредмет: Математика"
-        android:textColor="#FFFFFFFF"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:text="@string/student_and_subject"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:lineSpacingExtra="12dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayoutGrade"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Выпадающий список (Exposed Dropdown Menu) для выбора оценки -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutGrade"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Выберите оценку"
-        android:layout_marginTop="16dp"
+        android:hint="@string/choose_grade"
         app:layout_constraintTop_toBottomOf="@id/tvStudentInfo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+        android:layout_marginTop="16dp">
         <AutoCompleteTextView
             android:id="@+id/autoCompleteGrade"
             android:layout_width="match_parent"
@@ -53,31 +59,46 @@
             android:focusable="false"
             android:drawablePadding="8dp"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginBottom="50dp"
+            android:contentDescription="@string/choose_grade" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Кнопка "Сохранить" -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSaveGrade"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:cornerRadius="8dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutGrade"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp">
 
-    <!-- Кнопка "Назад" -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Назад"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:cornerRadius="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutGrade"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveGrade"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnBack"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnSaveGrade"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_marginStart="8dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

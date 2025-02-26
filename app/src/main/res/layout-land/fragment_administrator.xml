@@ -520,28 +520,43 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_question_AI"
+                android:textColor="@color/darkAccent"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/cardManageStudents"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <!-- Кнопка выхода внутри прокручиваемой области -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btLogout"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center"
-                app:icon="@drawable/ic_logout"
-                app:iconTint="@android:color/white"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="16dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
                 android:text="@string/logout_from_account"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/darkCardBackground"
                 app:cornerRadius="8dp"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="24dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/darkAccent"
-                app:layout_constraintTop_toBottomOf="@id/cardManageStudents"
-                app:layout_constraintStart_toStartOf="parent"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardManageStudents"
+                app:strokeColor="@color/darkAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

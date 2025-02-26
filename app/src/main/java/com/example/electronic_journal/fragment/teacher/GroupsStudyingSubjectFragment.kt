@@ -113,11 +113,13 @@ class GroupsStudyingSubjectFragment : Fragment(R.layout.fragment_groups_studying
     }
 
     private fun loadGroups(groups: List<Group>) {
-        binding.groupsContainer.removeAllViews()
+        // Сортируем группы по названию в алфавитном порядке
+        val sortedGroups = groups.sortedBy { it.name }
 
+        binding.groupsContainer.removeAllViews()
         val constraintSet = ConstraintSet()
 
-        for ((index, group) in groups.withIndex()) {
+        for ((index, group) in sortedGroups.withIndex()) {
             // Используем универсальную карточку для группы
             val cardView = layoutInflater.inflate(R.layout.item_name_card, binding.groupsContainer, false)
             cardView.id = View.generateViewId()

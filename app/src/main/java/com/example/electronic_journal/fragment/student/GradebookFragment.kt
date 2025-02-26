@@ -1,6 +1,6 @@
 package com.example.electronic_journal.fragment.student
 
-/*import android.os.Bundle
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +17,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GradebookFragment : Fragment() {
+
     private var _binding: FragmentGradebookBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var adapter: GradeAdapter
     private var gradeEntries: List<GradeEntryDTO> = emptyList()
-    //private lateinit var adapter: GradeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGradebookBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,28 +35,34 @@ class GradebookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация RecyclerView
-        //adapter = GradeAdapter(gradeEntries)
+        // Инициализируем адаптер и назначаем его для RecyclerView
+        adapter = GradeAdapter(gradeEntries)
         binding.rvGradebook.layoutManager = LinearLayoutManager(context)
-        //binding.rvGradebook.adapter = adapter
+        binding.rvGradebook.adapter = adapter
 
-        // Получаем зачетку для текущего студента
+        // Запрос к серверу для получения зачетки
         val apiService = WebServerSingleton.getApiService(requireContext())
         apiService.getGradebook().enqueue(object : Callback<GradebookDTO> {
             override fun onResponse(call: Call<GradebookDTO>, response: Response<GradebookDTO>) {
                 if (response.isSuccessful) {
                     val gradebook = response.body()
-                    gradebook?.let {
-                        gradeEntries = it.gradeEntries
-                        //adapter.updateData(gradeEntries)
+                    if (gradebook != null) {
+                        gradeEntries = gradebook.gradeEntries
+                        adapter.updateData(gradeEntries)
+
+                        if (gradeEntries.isEmpty()) {
+                            Toast.makeText(context, "В зачетке нет оценок", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "Не удалось получить зачетку", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "В зачетке нет оценок", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Ошибка сервера: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<GradebookDTO>, t: Throwable) {
-                Toast.makeText(requireContext(), "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Ошибка соединения: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -64,7 +71,4 @@ class GradebookFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}*/
-
-
-
+}

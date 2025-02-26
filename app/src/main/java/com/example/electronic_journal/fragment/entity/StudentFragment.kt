@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.electronic_journal.R
 import com.example.electronic_journal.databinding.FragmentStudentBinding
-//import com.example.electronic_journal.fragment.student.GradebookFragment
+import com.example.electronic_journal.fragment.student.GradebookFragment
 import com.example.electronic_journal.fragment.student.PersonalDataStudentFragment
 
 class StudentFragment : Fragment() {
@@ -15,7 +15,7 @@ class StudentFragment : Fragment() {
     private lateinit var binding: FragmentStudentBinding
     private var currentFragment: Fragment? = null
     private val personalDataFragment = PersonalDataStudentFragment()
-    //private val gradebookFragment = GradebookFragment()
+    private val gradebookFragment = GradebookFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +46,7 @@ class StudentFragment : Fragment() {
                     true
                 }
                 R.id.nav_gradebook -> {
-                    //showFragment(gradebookFragment)
+                    showFragment(gradebookFragment)
                     true
                 }
                 else -> false

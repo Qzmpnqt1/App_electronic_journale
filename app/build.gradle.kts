@@ -56,6 +56,7 @@ dependencies {
 
     // Для работы с сетевыми запросами
     implementation(libs.retrofit)
+    implementation(libs.okhttp)
 
     // Для работы с RxJava (если нужно)
     implementation(libs.rxjava)
@@ -64,6 +65,7 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.ktx.v262)
     implementation (libs.androidx.lifecycle.livedata.ktx.v262)
     implementation (libs.androidx.fragment.ktx.v161)
+    implementation(libs.protolite.well.known.types)
 
     // Тесты
     testImplementation(libs.junit)

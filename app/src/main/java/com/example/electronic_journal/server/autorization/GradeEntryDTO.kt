@@ -11,6 +11,13 @@ data class GradeEntryDTO(
     @SerializedName("subjectName")
     val subjectName: String,
 
-    @SerializedName("grade")
-    val grade: Int
+    @SerializedName("winterGrade")
+    val winterGrade: Int?,             // null, если не выставлена
+    @SerializedName("winterDateAssigned")
+    val winterDateAssigned: String?,   // или LocalDateTime в зависимости от парсинга
+
+    @SerializedName("summerGrade")
+    val summerGrade: Int?,             // null, если не выставлена
+    @SerializedName("summerDateAssigned")
+    val summerDateAssigned: String?    // или LocalDateTime
 )

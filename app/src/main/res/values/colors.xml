@@ -33,4 +33,8 @@
     <color name="colorSurface">#FFFBFE</color>   <!-- Цвет поверхности -->
     <color name="colorPrimary">#6750A4</color>   <!-- Основной цвет -->
     <color name="colorOnPrimary">#FFFFFF</color> <!-- Цвет текста на основном цвете -->
+
+    <color name="lightGray">#B3B3B3</color>
+
+
 </resources>

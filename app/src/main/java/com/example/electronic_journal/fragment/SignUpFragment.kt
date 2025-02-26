@@ -20,6 +20,9 @@ import com.example.electronic_journal.server.model.Subject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SignUpFragment : Fragment() {
 
@@ -38,12 +41,36 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Начальные состояния UI - по умолчанию показываем поля для студента
+        // По умолчанию показываем поля для студента
         showStudentFields()
 
         setupRecyclerView()
         loadSubjects()
         loadGroups()
+
+        // Устанавливаем обработчик клика для поля "Дата рождения", чтобы открыть календарь
+        binding.edDateOfBirth.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+            builder.setTitleText("Выберите дату рождения")
+            val picker = builder.build()
+            picker.show(childFragmentManager, "MATERIAL_DATE_PICKER")
+            picker.addOnPositiveButtonClickListener { selection ->
+                // selection - выбранное время в миллисекундах
+                // Преобразуем выбранное значение в LocalDate
+                val selectedDate = java.time.Instant.ofEpochMilli(selection)
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate()
+                val currentDate = java.time.LocalDate.now()
+                val age = java.time.Period.between(selectedDate, currentDate).years
+                if (age < 16) {
+                    Toast.makeText(requireContext(), "Вы должны быть не моложе 16 лет", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Формат по умолчанию LocalDate.toString() возвращает строку в формате "yyyy-MM-dd"
+                    binding.edDateOfBirth.setText(selectedDate.toString())
+                }
+            }
+        }
+
 
         binding.btSignUp.setOnClickListener {
             registerUser()
@@ -74,14 +101,13 @@ class SignUpFragment : Fragment() {
             return
         }
 
-        // Проверка домена электронной почты
         if (!(email.endsWith("@gmail.com", ignoreCase = true) || email.endsWith("@mail.ru", ignoreCase = true))) {
-            Toast.makeText(context, "Почта на @gmail.com или @mail.ru", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Почта должна быть на @gmail.com или @mail.ru", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (password.length < 6) {
-            Toast.makeText(context, "Пароль из минимум 6 символов", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Пароль должен содержать минимум 6 символов", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -126,7 +152,6 @@ class SignUpFragment : Fragment() {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     handleRegistrationResponse(response)
                 }
-
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -138,7 +163,6 @@ class SignUpFragment : Fragment() {
             Toast.makeText(context, "Пожалуйста, выберите хотя бы один предмет", Toast.LENGTH_SHORT).show()
             return
         }
-
         val subjectIds = selectedSubjects.map { it.subjectId }
         val request = TeacherSignUpRequest(
             name = name,
@@ -148,13 +172,11 @@ class SignUpFragment : Fragment() {
             password = password,
             subjectIds = subjectIds
         )
-
         WebServerSingleton.getApiService(requireContext()).registerTeacher(request)
             .enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     handleRegistrationResponse(response)
                 }
-
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -174,7 +196,6 @@ class SignUpFragment : Fragment() {
     private fun showStudentFields() {
         binding.tvSubjects.visibility = View.GONE
         binding.rvSubjects.visibility = View.GONE
-        // Показываем родительские контейнеры для даты рождения и ID группы
         binding.tilDateOfBirth.visibility = View.VISIBLE
         binding.tvGroupDetails.visibility = View.VISIBLE
         binding.tilGroupId.visibility = View.VISIBLE
@@ -183,7 +204,6 @@ class SignUpFragment : Fragment() {
     private fun showTeacherFields() {
         binding.tvSubjects.visibility = View.VISIBLE
         binding.rvSubjects.visibility = View.VISIBLE
-        // Скрываем родительские контейнеры для даты рождения и ID группы
         binding.tilDateOfBirth.visibility = View.GONE
         binding.tvGroupDetails.visibility = View.GONE
         binding.tilGroupId.visibility = View.GONE
@@ -202,7 +222,6 @@ class SignUpFragment : Fragment() {
                     Toast.makeText(context, "Ошибка загрузки групп", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<List<Group>>, t: Throwable) {
                 Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
             }
@@ -218,7 +237,6 @@ class SignUpFragment : Fragment() {
                     Toast.makeText(context, "Ошибка загрузки предметов", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<List<Subject>>, t: Throwable) {
                 Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
             }
@@ -235,7 +253,6 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    // Функция для создания NavOptions с анимациями
     private fun getNavOptions(): NavOptions {
         return NavOptions.Builder()
             .setEnterAnim(R.anim.slide_in_left)

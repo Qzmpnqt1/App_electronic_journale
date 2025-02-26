@@ -31,6 +31,10 @@ class AdministratorFragment : Fragment() {
     private lateinit var subjectAdapter: SubjectAdapter
     private val selectedSubjects = mutableListOf<Subject>()
 
+    // Кэш для загруженных данных
+    private var cachedSubjects: List<Subject>? = null
+    private var cachedGroups: List<Group>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +47,24 @@ class AdministratorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        loadSubjects()
-        loadGroups()
+
+        // Если предметы уже загружены, используем кэш, иначе загружаем с сервера
+        if (cachedSubjects == null) {
+            loadSubjects()
+        } else {
+            subjectAdapter.updateSubjects(cachedSubjects!!)
+            binding.tvSubjectDetails.text = cachedSubjects!!.joinToString("\n") {
+                "ID: ${it.subjectId}, Название: ${it.name}, Курс: ${it.course}"
+            }
+        }
+        if (cachedGroups == null) {
+            loadGroups()
+        } else {
+            val groupDetails = cachedGroups!!.sortedBy { it.name }
+                .joinToString("\n") { "ID: ${it.groupId}, Название: ${it.name}" }
+            binding.tvGroupDetails.text = groupDetails
+            binding.tvGroupList.text = groupDetails
+        }
 
         binding.btLogout.setOnClickListener {
             confirmLogout() // Диалог подтверждения выхода
@@ -56,32 +76,26 @@ class AdministratorFragment : Fragment() {
                 Toast.makeText(context, "Введите название группы", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             if (selectedSubjects.isEmpty()) {
                 Toast.makeText(context, "Выберите хотя бы один предмет", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             val subjectIds = selectedSubjects.map { it.subjectId }
-            val groupDTO = GroupDTO(
-                name = groupName,
-                subjectIds = subjectIds
-            )
-
-            WebServerSingleton.getApiService(requireContext()).addGroup(groupDTO).enqueue(object : Callback<Group> {
-                override fun onResponse(call: Call<Group>, response: Response<Group>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, "Группа добавлена", Toast.LENGTH_SHORT).show()
-                        loadGroups()
-                    } else {
-                        Toast.makeText(context, "Ошибка добавления группы", Toast.LENGTH_SHORT).show()
+            val groupDTO = GroupDTO(name = groupName, subjectIds = subjectIds)
+            WebServerSingleton.getApiService(requireContext()).addGroup(groupDTO)
+                .enqueue(object : Callback<Group> {
+                    override fun onResponse(call: Call<Group>, response: Response<Group>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(context, "Группа добавлена", Toast.LENGTH_SHORT).show()
+                            loadGroups() // Обновляем группы (и кэш)
+                        } else {
+                            Toast.makeText(context, "Ошибка добавления группы", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-
-                override fun onFailure(call: Call<Group>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Group>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
 
         binding.btDeleteGroup.setOnClickListener {
@@ -95,60 +109,57 @@ class AdministratorFragment : Fragment() {
                 Toast.makeText(context, "Введите корректный числовой ID группы", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            WebServerSingleton.getApiService(requireContext()).deleteGroup(groupIdInt).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, "Группа успешно удалена", Toast.LENGTH_SHORT).show()
-                        loadGroups()
-                    } else if (response.code() == 400) {
-                        Toast.makeText(context, "Невозможно удалить группу, в ней есть студенты", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Ошибка удаления группы", Toast.LENGTH_SHORT).show()
+            WebServerSingleton.getApiService(requireContext()).deleteGroup(groupIdInt)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(context, "Группа успешно удалена", Toast.LENGTH_SHORT).show()
+                            loadGroups()
+                        } else if (response.code() == 400) {
+                            Toast.makeText(context, "Невозможно удалить группу, в ней есть студенты", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Ошибка удаления группы", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
 
         binding.btAddSubject.setOnClickListener {
             val subjectName = binding.edSubjectName.text.toString().trim()
             val subjectCourse = binding.edSubjectCourse.text.toString().trim()
-
             if (subjectName.isEmpty() || subjectCourse.isEmpty()) {
                 Toast.makeText(context, "Введите название и курс предмета", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             val course = subjectCourse.toIntOrNull()
             if (course == null || course !in 1..4) {
                 Toast.makeText(context, "Курс должен быть числом от 1 до 4", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             val subjectDTO = SubjectDTO(name = subjectName, course = course)
-            WebServerSingleton.getApiService(requireContext()).addSubject(subjectDTO).enqueue(object : Callback<Subject> {
-                override fun onResponse(call: Call<Subject>, response: Response<Subject>) {
-                    if (response.isSuccessful) {
-                        val addedSubject = response.body()
-                        if (addedSubject != null) {
-                            Toast.makeText(context, "Предмет добавлен: ${addedSubject.name}", Toast.LENGTH_SHORT).show()
-                            loadSubjects()
+            WebServerSingleton.getApiService(requireContext()).addSubject(subjectDTO)
+                .enqueue(object : Callback<Subject> {
+                    override fun onResponse(call: Call<Subject>, response: Response<Subject>) {
+                        if (response.isSuccessful) {
+                            val addedSubject = response.body()
+                            if (addedSubject != null) {
+                                Toast.makeText(context, "Предмет добавлен: ${addedSubject.name}", Toast.LENGTH_SHORT).show()
+                                loadSubjects()
+                            }
+                        } else if (response.code() == 400) {
+                            val errorMessage = response.errorBody()?.string()
+                            Toast.makeText(context, errorMessage ?: "Ошибка добавления предмета", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Ошибка добавления предмета", Toast.LENGTH_SHORT).show()
                         }
-                    } else if (response.code() == 400) {
-                        val errorMessage = response.errorBody()?.string()
-                        Toast.makeText(context, errorMessage ?: "Ошибка добавления предмета", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Ошибка добавления предмета", Toast.LENGTH_SHORT).show()
                     }
-                }
-
-                override fun onFailure(call: Call<Subject>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Subject>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
 
         binding.btDeleteSubject.setOnClickListener {
@@ -162,20 +173,20 @@ class AdministratorFragment : Fragment() {
                 Toast.makeText(context, "Введите корректный числовой ID предмета", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            WebServerSingleton.getApiService(requireContext()).deleteSubject(subjectIdInt).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, "Предмет удалён", Toast.LENGTH_SHORT).show()
-                        loadSubjects()
-                    } else {
-                        Toast.makeText(context, "Ошибка удаления предмета", Toast.LENGTH_SHORT).show()
+            WebServerSingleton.getApiService(requireContext()).deleteSubject(subjectIdInt)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(context, "Предмет удалён", Toast.LENGTH_SHORT).show()
+                            loadSubjects()
+                        } else {
+                            Toast.makeText(context, "Ошибка удаления предмета", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
 
         binding.btLoadStudents.setOnClickListener {
@@ -189,25 +200,28 @@ class AdministratorFragment : Fragment() {
                 Toast.makeText(context, "Введите корректный числовой ID группы", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            WebServerSingleton.getApiService(requireContext()).getStudentsByGroupId(groupIdInt).enqueue(object : Callback<List<Student>> {
-                override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
-                    if (response.isSuccessful) {
-                        val students = response.body()
-                        if (!students.isNullOrEmpty()) {
-                            val sortedStudents = students.sortedBy { it.surname }
-                            val studentDetails = sortedStudents.joinToString("\n") { "ID: ${it.studentId}, ${it.surname} ${it.name}" }
-                            binding.tvStudentList.text = studentDetails
+            WebServerSingleton.getApiService(requireContext()).getStudentsByGroupId(groupIdInt)
+                .enqueue(object : Callback<List<Student>> {
+                    override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
+                        if (response.isSuccessful) {
+                            val students = response.body()
+                            if (!students.isNullOrEmpty()) {
+                                val sortedStudents = students.sortedBy { it.surname }
+                                val studentDetails = sortedStudents.joinToString("\n") {
+                                    "ID: ${it.studentId}, ${it.surname} ${it.name}"
+                                }
+                                binding.tvStudentList.text = studentDetails
+                            } else {
+                                binding.tvStudentList.text = "Нет студентов в этой группе"
+                            }
                         } else {
-                            binding.tvStudentList.text = "Нет студентов в этой группе"
+                            Toast.makeText(context, "Ошибка загрузки студентов", Toast.LENGTH_SHORT).show()
                         }
-                    } else {
-                        Toast.makeText(context, "Ошибка загрузки студентов", Toast.LENGTH_SHORT).show()
                     }
-                }
-                override fun onFailure(call: Call<List<Student>>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<List<Student>>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
 
         binding.btDeleteStudent.setOnClickListener {
@@ -221,19 +235,24 @@ class AdministratorFragment : Fragment() {
                 Toast.makeText(context, "Введите корректный числовой ID студента", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            WebServerSingleton.getApiService(requireContext()).removeStudentFromGroup(studentIdInt).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, "Студент удалён из группы", Toast.LENGTH_SHORT).show()
-                        binding.btLoadStudents.performClick()
-                    } else {
-                        Toast.makeText(context, "Ошибка удаления студента", Toast.LENGTH_SHORT).show()
+            WebServerSingleton.getApiService(requireContext()).removeStudentFromGroup(studentIdInt)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(context, "Студент удалён из группы", Toast.LENGTH_SHORT).show()
+                            binding.btLoadStudents.performClick()
+                        } else {
+                            Toast.makeText(context, "Ошибка удаления студента", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        }
+
+        binding.tvSearch?.setOnClickListener {
+            navigateToFragment(R.id.administratorSearchFragment, getSearchNavOptions())
         }
     }
 
@@ -243,6 +262,7 @@ class AdministratorFragment : Fragment() {
                 if (response.isSuccessful) {
                     val subjects = response.body()
                     if (subjects != null) {
+                        cachedSubjects = subjects // кэшируем предметы
                         subjectAdapter.updateSubjects(subjects)
                         val subjectDetails = subjects.joinToString("\n") {
                             "ID: ${it.subjectId}, Название: ${it.name}, Курс: ${it.course}"
@@ -256,7 +276,6 @@ class AdministratorFragment : Fragment() {
                     Toast.makeText(context, "Ошибка загрузки предметов", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<List<Subject>>, t: Throwable) {
                 Log.e("loadSubjects", "Ошибка соединения: ${t.message}")
                 Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
@@ -270,13 +289,13 @@ class AdministratorFragment : Fragment() {
                 if (response.isSuccessful) {
                     val groups = response.body()
                     if (groups != null) {
+                        cachedGroups = groups // кэшируем группы
                         val sortedGroups = groups.sortedBy { it.name }
-                        val groupDetails = StringBuilder()
-                        for (group in sortedGroups) {
-                            groupDetails.append("ID: ${group.groupId}, Название: ${group.name}\n")
+                        val groupDetails = sortedGroups.joinToString("\n") {
+                            "ID: ${it.groupId}, Название: ${it.name}"
                         }
-                        binding.tvGroupDetails.text = groupDetails.toString()
-                        binding.tvGroupList.text = groupDetails.toString()
+                        binding.tvGroupDetails.text = groupDetails
+                        binding.tvGroupList.text = groupDetails
                     } else {
                         binding.tvGroupDetails.text = "Нет доступных групп"
                         binding.tvGroupList.text = "Нет доступных групп"
@@ -286,7 +305,6 @@ class AdministratorFragment : Fragment() {
                     Toast.makeText(context, "Ошибка загрузки групп", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<List<Group>>, t: Throwable) {
                 Log.e("loadGroups", "Ошибка соединения: ${t.message}")
                 Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
@@ -296,16 +314,34 @@ class AdministratorFragment : Fragment() {
 
     private fun setupRecyclerView() {
         subjectAdapter = SubjectAdapter(mutableListOf()) { subject, isSelected ->
-            if (isSelected) {
-                selectedSubjects.add(subject)
-            } else {
-                selectedSubjects.remove(subject)
-            }
+            if (isSelected) selectedSubjects.add(subject) else selectedSubjects.remove(subject)
         }
         binding.rvSubjects.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = subjectAdapter
         }
+    }
+
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_right)
+            .setPopExitAnim(R.anim.slide_out_left)
+            .build()
+    }
+
+    private fun getSearchNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(R.anim.slide_in_left)
+            .setPopExitAnim(R.anim.slide_out_right)
+            .build()
+    }
+
+    private fun navigateToFragment(fragmentId: Int, navOptions: NavOptions) {
+        findNavController().navigate(fragmentId, null, navOptions)
     }
 
     private fun confirmLogout() {
@@ -326,20 +362,6 @@ class AdministratorFragment : Fragment() {
             remove("role")
             apply()
         }
-        navigateToFragment(R.id.authorizationFragment)
-    }
-
-    // Функция для создания NavOptions с анимациями
-    private fun getNavOptions(): NavOptions {
-        return NavOptions.Builder()
-            .setEnterAnim(R.anim.slide_in_left)
-            .setExitAnim(R.anim.slide_out_right)
-            .setPopEnterAnim(R.anim.slide_in_right)
-            .setPopExitAnim(R.anim.slide_out_left)
-            .build()
-    }
-
-    private fun navigateToFragment(fragmentId: Int) {
-        findNavController().navigate(fragmentId, null, getNavOptions())
+        navigateToFragment(R.id.authorizationFragment, getNavOptions())
     }
 }
