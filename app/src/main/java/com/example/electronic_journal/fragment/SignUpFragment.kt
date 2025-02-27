@@ -1,10 +1,13 @@
 package com.example.electronic_journal.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -13,6 +16,7 @@ import com.example.electronic_journal.R
 import com.example.electronic_journal.adapter.SubjectAdapter
 import com.example.electronic_journal.databinding.FragmentSignUpBinding
 import com.example.electronic_journal.server.WebServerSingleton
+import com.example.electronic_journal.server.autorization.EmailVerificationRequest
 import com.example.electronic_journal.server.autorization.StudentRegistrationRequest
 import com.example.electronic_journal.server.autorization.TeacherSignUpRequest
 import com.example.electronic_journal.server.model.Group
@@ -21,8 +25,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.material.datepicker.MaterialDatePicker
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SignUpFragment : Fragment() {
 
@@ -48,15 +50,13 @@ class SignUpFragment : Fragment() {
         loadSubjects()
         loadGroups()
 
-        // Устанавливаем обработчик клика для поля "Дата рождения", чтобы открыть календарь
+        // Обработчик клика для поля "Дата рождения" – открывает календарь
         binding.edDateOfBirth.setOnClickListener {
             val builder = MaterialDatePicker.Builder.datePicker()
             builder.setTitleText("Выберите дату рождения")
             val picker = builder.build()
             picker.show(childFragmentManager, "MATERIAL_DATE_PICKER")
             picker.addOnPositiveButtonClickListener { selection ->
-                // selection - выбранное время в миллисекундах
-                // Преобразуем выбранное значение в LocalDate
                 val selectedDate = java.time.Instant.ofEpochMilli(selection)
                     .atZone(java.time.ZoneId.systemDefault())
                     .toLocalDate()
@@ -65,12 +65,10 @@ class SignUpFragment : Fragment() {
                 if (age < 16) {
                     Toast.makeText(requireContext(), "Вы должны быть не моложе 16 лет", Toast.LENGTH_SHORT).show()
                 } else {
-                    // Формат по умолчанию LocalDate.toString() возвращает строку в формате "yyyy-MM-dd"
                     binding.edDateOfBirth.setText(selectedDate.toString())
                 }
             }
         }
-
 
         binding.btSignUp.setOnClickListener {
             registerUser()
@@ -150,7 +148,7 @@ class SignUpFragment : Fragment() {
         WebServerSingleton.getApiService(requireContext()).registerStudent(request)
             .enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    handleRegistrationResponse(response)
+                    handleRegistrationResponse(email, response, true) // <-- student
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
@@ -175,7 +173,7 @@ class SignUpFragment : Fragment() {
         WebServerSingleton.getApiService(requireContext()).registerTeacher(request)
             .enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    handleRegistrationResponse(response)
+                    handleRegistrationResponse(email, response, false) // <-- teacher
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Toast.makeText(context, "Ошибка соединения: ${t.message}", Toast.LENGTH_SHORT).show()
@@ -183,11 +181,12 @@ class SignUpFragment : Fragment() {
             })
     }
 
-    private fun handleRegistrationResponse(response: Response<Void>) {
+    private fun handleRegistrationResponse(email: String, response: Response<Void>, isStudent: Boolean) {
         if (response.isSuccessful) {
-            Toast.makeText(context, "Регистрация успешна", Toast.LENGTH_SHORT).show()
-            navigateToFragment(R.id.authorizationFragment)
-        } else {
+            Toast.makeText(context, "На указанный email отправлен код подтверждения", Toast.LENGTH_SHORT).show()
+            showVerificationDialog(email, isStudent)
+        }
+        else {
             val errorMessage = response.errorBody()?.string()
             Toast.makeText(context, "Ошибка регистрации: $errorMessage", Toast.LENGTH_SHORT).show()
         }
@@ -264,5 +263,62 @@ class SignUpFragment : Fragment() {
 
     private fun navigateToFragment(fragmentId: Int) {
         findNavController().navigate(fragmentId, null, getNavOptions())
+    }
+
+    // Функция для показа диалога ввода кода подтверждения
+    private fun showVerificationDialog(email: String, isStudent: Boolean) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Подтверждение Email")
+        builder.setMessage("Введите 6-значный код, отправленный на вашу почту:")
+
+        val input = EditText(requireContext())
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+        builder.setView(input)
+
+        builder.setPositiveButton("Подтвердить") { dialog, which ->
+            val code = input.text.toString().trim()
+            if (code.length != 6) {
+                Toast.makeText(requireContext(), "Код должен состоять из 6 цифр", Toast.LENGTH_SHORT).show()
+            } else {
+                if (isStudent) {
+                    WebServerSingleton.getApiService(requireContext())
+                        .confirmStudentRegistration(EmailVerificationRequest(email, code))
+                        .enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(requireContext(), "Email успешно подтвержден", Toast.LENGTH_SHORT).show()
+                                    navigateToFragment(R.id.authorizationFragment)
+                                } else {
+                                    Toast.makeText(requireContext(), "Ошибка подтверждения email", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                Toast.makeText(requireContext(), "Ошибка сети: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                } else {
+                    WebServerSingleton.getApiService(requireContext())
+                        .confirmTeacherRegistration(EmailVerificationRequest(email, code))
+                        .enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(requireContext(), "Email успешно подтвержден", Toast.LENGTH_SHORT).show()
+                                    navigateToFragment(R.id.authorizationFragment)
+                                } else {
+                                    Toast.makeText(requireContext(), "Ошибка подтверждения email", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                Toast.makeText(requireContext(), "Ошибка сети: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                }
+            }
+        }
+
+        builder.setNegativeButton("Отмена") { dialog, which ->
+            dialog.cancel()
+        }
+        builder.show()
     }
 }

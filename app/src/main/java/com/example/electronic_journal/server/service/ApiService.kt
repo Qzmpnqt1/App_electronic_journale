@@ -2,6 +2,7 @@ package com.example.electronic_journal.server.service
 
 import com.example.electronic_journal.server.autorization.AuthRequest
 import com.example.electronic_journal.server.autorization.AuthResponse
+import com.example.electronic_journal.server.autorization.EmailVerificationRequest
 import com.example.electronic_journal.server.autorization.GradeEntryRequest
 import com.example.electronic_journal.server.autorization.GradebookDTO
 import com.example.electronic_journal.server.autorization.GroupDTO
@@ -24,6 +25,12 @@ interface ApiService {
     // Авторизация и регистрация в приложении
     @POST("auth/login")
     fun login(@Body authRequest: AuthRequest): Call<AuthResponse>
+
+    @POST("auth/confirm-registration/student")
+    fun confirmStudentRegistration(@Body request: EmailVerificationRequest): Call<Void>
+
+    @POST("auth/confirm-registration/teacher")
+    fun confirmTeacherRegistration(@Body request: EmailVerificationRequest): Call<Void>
 
     @POST("auth/register/student")
     fun registerStudent(@Body request: StudentRegistrationRequest): Call<Void>
