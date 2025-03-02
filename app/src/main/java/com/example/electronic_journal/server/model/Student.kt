@@ -1,6 +1,6 @@
 package com.example.electronic_journal.server.model
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 
@@ -31,5 +31,8 @@ data class Student (
     val password: String,
 
     @SerializedName("role")
-    var role: String
+    val role: String,
+
+    @SerializedName("photoUrl")
+    val photoUrl: String? = null
 )

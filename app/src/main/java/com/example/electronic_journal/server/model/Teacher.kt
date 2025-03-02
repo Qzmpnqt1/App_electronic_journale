@@ -24,5 +24,8 @@ data class Teacher (
     var role: String,
 
     @SerializedName("subjects")
-    var subjects: Set<Subject> = emptySet()
+    var subjects: Set<Subject> = emptySet(),
+
+    @SerializedName("photoUrl")
+    val photoUrl: String? = null
 )

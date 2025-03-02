@@ -80,4 +80,7 @@ dependencies {
 
     implementation(libs.androidx.navigation.fragment.ktx.v275)
     implementation(libs.androidx.navigation.ui.ktx.v275)
+
+    implementation (libs.glide)
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
 }

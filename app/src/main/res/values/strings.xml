@@ -88,4 +88,17 @@
     <string name="search_results">Результаты поиска</string>
     <string name="copy">Копировать</string>
     <string name="share">Поделиться</string>
+
+    <string name="subject_math">Предмет: Математика</string>
+    <string name="winter_session">Зимняя сессия:</string>
+    <string name="best_winter">Лучшая: Иванов Иван (5)</string>
+    <string name="average_winter">Средний балл: 4.12</string>
+    <string name="worst_winter">Худшая: Петров Пётр (3)</string>
+    <string name="summer_session">Летняя сессия:</string>
+    <string name="best_summer">Лучшая: Иванов Иван (5)</string>
+    <string name="average_summer">Средний балл: 4.46</string>
+    <string name="worst_summer">Худшая: Сидоров (2)</string>
+
+    <string name="stats_header">Статистика по группе</string>
+    <string name="view_stats">Посмотреть статистику</string>
 </resources>

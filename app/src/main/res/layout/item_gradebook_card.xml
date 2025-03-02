@@ -10,7 +10,6 @@
     app:cardElevation="2dp"
     app:strokeColor="@color/surface_variant"
     app:strokeWidth="1dp"
-
     android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout

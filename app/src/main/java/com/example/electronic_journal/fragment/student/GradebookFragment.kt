@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.electronic_journal.R
 import com.example.electronic_journal.adapter.GradeAdapter
 import com.example.electronic_journal.databinding.FragmentGradebookBinding
 import com.example.electronic_journal.server.WebServerSingleton
@@ -40,6 +41,21 @@ class GradebookFragment : Fragment() {
         binding.rvGradebook.layoutManager = LinearLayoutManager(context)
         binding.rvGradebook.adapter = adapter
 
+        // Обработчик клика для перехода на фрагмент статистики с анимацией
+        binding.tvViewStats.setOnClickListener {
+            val statsFragment = StatsFragment()
+            parentFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,   // StatsFragment появляется справа
+                    R.anim.slide_out_left,     // GradebookFragment уходит влево
+                    R.anim.slide_in_left,      // При возврате GradebookFragment появляется слева
+                    R.anim.slide_out_right     // StatsFragment уходит вправо при возврате
+                )
+                .replace(R.id.fragmentContainer, statsFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
         // Запрос к серверу для получения зачетки
         val apiService = WebServerSingleton.getApiService(requireContext())
         apiService.getGradebook().enqueue(object : Callback<GradebookDTO> {
@@ -51,18 +67,18 @@ class GradebookFragment : Fragment() {
                         adapter.updateData(gradeEntries)
 
                         if (gradeEntries.isEmpty()) {
-                            Toast.makeText(context, "В зачетке нет оценок", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "В зачетке нет оценок", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(context, "Не удалось получить зачетку", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Не удалось получить зачетку", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Ошибка сервера: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Ошибка сервера: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<GradebookDTO>, t: Throwable) {
-                Toast.makeText(context, "Ошибка соединения: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Ошибка соединения: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         })
     }

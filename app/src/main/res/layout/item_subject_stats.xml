@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/surface_variant"
+    app:strokeWidth="1dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Название предмета -->
+        <TextView
+            android:id="@+id/tvSubjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subject_math"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />
+
+        <!-- Блок для зимней сессии -->
+        <TextView
+            android:id="@+id/tvWinterHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/winter_session"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvBestWinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/best_winter"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvAverageWinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_winter"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvWorstWinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/worst_winter"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <!-- Блок для летней сессии -->
+        <TextView
+            android:id="@+id/tvSummerHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/summer_session"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvBestSummer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/best_summer"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvAverageSummer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_summer"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/tvWorstSummer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/worst_summer"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

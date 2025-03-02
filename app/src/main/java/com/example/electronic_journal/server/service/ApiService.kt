@@ -8,17 +8,22 @@ import com.example.electronic_journal.server.autorization.GradebookDTO
 import com.example.electronic_journal.server.autorization.GroupDTO
 import com.example.electronic_journal.server.autorization.StudentRegistrationRequest
 import com.example.electronic_journal.server.autorization.SubjectDTO
+import com.example.electronic_journal.server.autorization.SubjectStatsDTO
 import com.example.electronic_journal.server.autorization.TeacherSignUpRequest
+import com.example.electronic_journal.server.autorization.UploadPhotoResponse
 import com.example.electronic_journal.server.model.GradeEntry
 import com.example.electronic_journal.server.model.Group
 import com.example.electronic_journal.server.model.Student
 import com.example.electronic_journal.server.model.Subject
 import com.example.electronic_journal.server.model.Teacher
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -46,10 +51,27 @@ interface ApiService {
     @GET("student/gradebook")
     fun getGradebook(): Call<GradebookDTO>
 
+    @GET("student/stats")
+    fun getGroupStats(): Call<List<SubjectStatsDTO>>
+
+    // Эндпоинт для загрузки фото, возвращает новый URL в виде строки
+    @Multipart
+    @POST("student/uploadPhoto")
+    fun uploadPhoto(
+        @Part photo: MultipartBody.Part
+    ): Call<UploadPhotoResponse>
+
+
 
     // Функционал учителя
     @GET("teacher/personal-data")
     fun getPersonalDataTeacher(): Call<Teacher>
+
+    @Multipart
+    @POST("teacher/uploadPhoto")
+    fun uploadTeacherPhoto(
+        @Part photo: MultipartBody.Part
+    ): Call<UploadPhotoResponse>
 
     @GET("teacher/subjects/{subjectId}/groups")
     fun getGroupsForSubject(@Path("subjectId") subjectId: Int): Call<List<Group>>
@@ -73,6 +95,7 @@ interface ApiService {
 
     @GET("admin/groups/{groupId}/students")
     fun getStudentsByGroupId(@Path("groupId") groupId: Int): Call<List<Student>>
+
 
     // Работа админа с предметами
     @POST("admin/subjects")
