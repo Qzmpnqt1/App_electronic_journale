@@ -88,94 +88,73 @@
                 <!-- Фамилия -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilSurname"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/rgUserType"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edSurname"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/surname"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/surname" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Имя -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilName"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/tilSurname"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edName"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/name"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Отчество -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPatronymic"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/tilName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edPatronymic"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/patronymic"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/patronymic" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Дата рождения -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDateOfBirth"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/tilPatronymic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <!-- Поле, которое не позволяет редактировать напрямую, но открывает календарь по клику -->
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edDateOfBirth"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
                         android:hint="@string/date_of_birthday"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp"
                         android:focusable="false"
                         android:clickable="true"
                         android:inputType="none" />
@@ -184,12 +163,11 @@
                 <!-- Заголовок для групп -->
                 <TextView
                     android:id="@+id/tvGroupDetails"
+                    style="@style/BodyWhiteTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/available_groups"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tilDateOfBirth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -197,35 +175,29 @@
                 <!-- ID группы -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilGroupId"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/tvGroupDetails"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edGroupId"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/id_group"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/id_group" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Выбор предметов -->
                 <TextView
                     android:id="@+id/tvSubjects"
+                    style="@style/BodyWhiteTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/select_subjects"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tilGroupId"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -243,34 +215,28 @@
                 <!-- Email -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEmail"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:layout_constraintTop_toBottomOf="@id/rvSubjects"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edEmail"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/email"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/email" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Пароль -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassword"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/tilEmail"
                     app:layout_constraintStart_toStartOf="parent"
@@ -278,23 +244,18 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edPassword"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/password"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/password" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Подтверждение пароля -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilConfirmPassword"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/DarkOutlinedTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/darkAccent"
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/tilPassword"
                     app:layout_constraintStart_toStartOf="parent"
@@ -302,25 +263,19 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edConfirmPassword"
+                        style="@style/DarkEditTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="@string/confirm_your_password"
-                        android:padding="12dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="#9E9E9E"
-                        android:textSize="16sp" />
+                        android:hint="@string/confirm_your_password" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Кнопка регистрации -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btSignUp"
+                    style="@style/MaterialButtonDarkAccent"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="30dp"
                     android:text="@string/sign_up"
-                    android:textColor="@color/white"
-                    app:backgroundTint="@color/darkAccent"
-                    app:cornerRadius="8dp"
                     app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />

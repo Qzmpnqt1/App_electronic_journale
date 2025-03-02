@@ -16,10 +16,9 @@
         android:layout_height="wrap_content"
         android:text="@string/gradebook"
         android:gravity="center"
-        android:layout_marginTop="48dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Текстовое поле для перехода на статистику -->
     <TextView
@@ -28,36 +27,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/view_stats"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvHeader"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:clickable="true"
         android:focusable="true"
-        android:textColor="@color/md_theme_light_primary" />
-
-    <!-- Контейнер для списка оценок -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/subjectsContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/tvViewStats"
+        android:textColor="@color/md_theme_light_primary"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGradebook"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Контейнер для списка оценок (ширина задается явно для горизонтального отображения) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGradebook"
+        android:layout_width="400dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvViewStats"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

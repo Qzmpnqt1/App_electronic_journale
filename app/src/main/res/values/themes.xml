@@ -1,17 +1,96 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme без ActionBar. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Тема приложения (примерно как у вас уже было) -->
     <style name="Theme.Electronic_journal" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
+        <!-- Прочие настройки темы -->
         <item name="android:statusBarColor">@color/dark_background</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
+        <!-- ... -->
     </style>
+
+    <!-- Стиль для CardView с нужными углами, тенью и фоном -->
+    <style name="DarkElevatedCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardBackgroundColor">@color/darkCardBackground</item>
+    </style>
+
+    <!-- Стиль для TextInputLayout с outlined-рамкой и цветом обводки -->
+    <style name="DarkOutlinedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/darkAccent</item>
+    </style>
+
+    <!-- Кнопка (полная, залитая) с тёмно-фиолетовым/тёмно-акцентным цветом (darkAccent), белым текстом и 8dp скруглением -->
+    <style name="MaterialButtonDarkAccent" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="iconTint">@color/white</item>
+        <item name="backgroundTint">@color/darkAccent</item>
+    </style>
+
+    <!-- Кнопка (полная, залитая) с красным фоном, белым текстом и 8dp скруглением -->
+    <style name="MaterialButtonRed" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="iconTint">@color/white</item>
+        <item name="backgroundTint">@color/red</item>
+    </style>
+
+    <!-- Кнопка (Outlined) с белым текстом, обводкой darkAccent и скруглёнными углами -->
+    <style name="OutlinedButtonDarkAccent" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="strokeColor">@color/darkAccent</item>
+        <item name="iconTint">@android:color/white</item>
+    </style>
+
+    <!-- Стиль для крупных заголовков (28sp, bold, darkAccent) -->
+    <style name="HeaderTextViewStyle">
+        <item name="android:textColor">@color/darkAccent</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Стиль для чуть меньших заголовков (24sp, bold, darkAccent) -->
+    <style name="TitleTextViewStyle">
+        <item name="android:textColor">@color/darkAccent</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Стиль для «средних» заголовков (20sp, bold, белый цвет) -->
+    <style name="SubtitleWhiteTextViewStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Стиль для обычных белых надписей 16sp -->
+    <style name="BodyWhiteTextViewStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Пример стиля для TextInputEditText внутри DarkOutlinedTextInputLayout (если надо выносить повторения) -->
+    <style name="DarkEditTextStyle">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">#9E9E9E</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/darkCardBackground</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+    </style>
+
 </resources>
