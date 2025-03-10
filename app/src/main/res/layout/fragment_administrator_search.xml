@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_background"
+    style="@style/DarkBackgroundConstraintLayout"
     tools:context=".fragment.administrator.AdministratorSearchFragment">
 
-    <!-- ScrollView для прокрутки содержимого, если оно большое -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        style="@style/DarkScrollViewConstraint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,56 +21,47 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Кнопка "Назад" в левом верхнем углу -->
+            <!-- Кнопка "Назад" -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                style="@style/ButtonOutlinedDarkAccent"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.15"
                 app:icon="@drawable/ic_back"
-                app:iconTint="@color/white"
-                app:strokeColor="@color/darkAccent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/white"
-                app:cornerRadius="8dp"
-                app:layout_constraintWidth_percent="0.15" />
+                app:iconTint="@color/white" />
 
-            <!-- Кнопка "Обновить" в правом верхнем углу -->
+            <!-- Кнопка "Обновить" -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReload"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                style="@style/ButtonOutlinedDarkAccent"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                app:cornerRadius="8dp"
+                app:layout_constraintWidth_percent="0.15"
                 app:icon="@drawable/ic_refresh"
                 app:iconGravity="textStart"
-                app:iconTint="@color/white"
-                app:strokeColor="@color/darkAccent"
-                app:layout_constraintWidth_percent="0.15" />
+                app:iconTint="@color/white" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ask_any_question"
-                android:textSize="28sp"
-                android:textColor="@color/darkAccent"
-                android:textStyle="bold"
+                style="@style/DarkTitle28Text"
                 android:layout_marginTop="50dp"
+                android:text="@string/ask_any_question"
                 app:layout_constraintTop_toBottomOf="@id/btnBack"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Поле ввода поискового запроса с иконкой очистки и поисковой иконкой слева -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/searchInputLayout"
                 android:layout_width="0dp"
@@ -100,19 +89,18 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Текстовое поле для отображения ответа / плейсхолдера -->
             <TextView
                 android:id="@+id/tvInternetInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text=""
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:padding="8dp"
                 app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

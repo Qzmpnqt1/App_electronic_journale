@@ -1,107 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FF121212"
+    style="@style/DarkBackgroundConstraintLayout"
     android:padding="16dp"
     tools:context=".fragment.teacher.TeacherSetGradeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Выставление оценки"
+        android:textSize="26sp"
+        android:textColor="#FFBB86FC"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Заголовок -->
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="0dp"
+    <!-- Информация о студенте и предмете -->
+    <TextView
+        android:id="@+id/tvStudentInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Студент: Иванов Иван Иванович&#10;Предмет: Математика"
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:lineSpacingExtra="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Выпадающий список для выбора оценки -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutGrade"
+        style="@style/FilledBoxDropdownDark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Выберите оценку"
+        app:layout_constraintTop_toBottomOf="@id/tvStudentInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="16dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteGrade"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Выставление оценки"
-            android:textSize="26sp"
-            android:textColor="#FFBB86FC"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:inputType="none"
+            android:focusable="false"
+            android:drawablePadding="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:contentDescription="Выберите оценку" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Контейнер для кнопок "Сохранить" и "Назад" -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutGrade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveGrade"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            style="@style/ButtonOutlinedDarkAccent"
+            app:cornerRadius="8dp"
+            android:layout_marginStart="172dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_marginEnd="8dp"/>
 
-        <!-- Информация о студенте и предмете -->
-        <TextView
-            android:id="@+id/tvStudentInfo"
-            android:layout_width="0dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:text="Студент: Иванов Иван Иванович\nПредмет: Математика"
-            android:textColor="#FFFFFFFF"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:lineSpacingExtra="12dp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/back"
+            style="@style/ButtonOutlinedDarkAccent"
+            app:cornerRadius="8dp"
+            android:layout_marginEnd="172dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Выпадающий список (Exposed Dropdown Menu) для выбора оценки -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutGrade"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Выберите оценку"
-            app:layout_constraintTop_toBottomOf="@id/tvStudentInfo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="64dp"
-            android:layout_marginTop="16dp">
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteGrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:focusable="false"
-                android:drawablePadding="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:contentDescription="Выберите оценку" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Контейнер для кнопок "Сохранить" и "Назад" -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/buttonContainer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutGrade"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSaveGrade"
-                android:layout_width="135dp"
-                android:layout_height="wrap_content"
-                android:text="Сохранить"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:cornerRadius="8dp"
-                android:layout_marginStart="172dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                android:layout_marginEnd="8dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBack"
-                android:layout_width="135dp"
-                android:layout_height="wrap_content"
-                android:text="Назад"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:cornerRadius="8dp"
-                android:layout_marginEnd="172dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                android:layout_marginStart="8dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_marginStart="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

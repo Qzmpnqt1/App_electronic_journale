@@ -3,9 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FF121212"
+    style="@style/DarkBackgroundConstraintLayout"
     android:padding="16dp"
     tools:context=".fragment.teacher.TeacherSetGradeFragment">
 
@@ -37,9 +35,9 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textInputLayoutGrade"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintBottom_toTopOf="@id/textInputLayoutGrade" />
 
+    <!-- Поле выбора оценки -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutGrade"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -51,6 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/buttonContainer"
         android:layout_marginTop="16dp">
+
         <AutoCompleteTextView
             android:id="@+id/autoCompleteGrade"
             android:layout_width="match_parent"
@@ -68,37 +67,36 @@
         android:id="@+id/buttonContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutGrade"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="24dp">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveGrade"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            style="@style/ButtonOutlinedDarkAccent"
+            android:layout_marginEnd="8dp"
             android:text="@string/save"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:cornerRadius="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnBack"
-            app:layout_constraintHorizontal_weight="1"
-            android:layout_marginEnd="8dp"/>
+            app:layout_constraintHorizontal_weight="1" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            style="@style/ButtonOutlinedDarkAccent"
+            android:layout_marginStart="8dp"
             android:text="@string/back"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:cornerRadius="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnSaveGrade"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            android:layout_marginStart="8dp"/>
+            app:layout_constraintHorizontal_weight="1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

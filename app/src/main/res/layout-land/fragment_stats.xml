@@ -4,52 +4,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DarkBackgroundConstraintLayout"
-    tools:context=".fragment.student.GradebookFragment">
+    android:id="@+id/statsRoot"
+    tools:context=".fragment.student.StatsFragment">
 
-    <!-- Заголовок экрана -->
+    <!-- Заголовок статистики -->
     <TextView
-        android:id="@+id/tvHeader"
+        android:id="@+id/tvStatsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/DarkTitle28Text"
-        android:layout_marginTop="48dp"
-        android:text="@string/gradebook"
+        android:text="@string/stats_header"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Текстовое поле для перехода на статистику -->
-    <TextView
-        android:id="@+id/tvViewStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/view_stats"
-        android:textSize="16sp"
-        android:textColor="@color/md_theme_light_primary"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@id/tvHeader"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Контейнер для списка оценок -->
+    <!-- Контейнер для списка статистики -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/subjectsContainer"
+        android:id="@+id/rvStatsContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/tvViewStats"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvStatsHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGradebook"
+            android:id="@+id/rvStats"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:padding="8dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginStart="125dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

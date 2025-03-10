@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Общий фон и размеры для ConstraintLayout -->
+    <style name="DarkBackgroundConstraintLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/dark_background</item>
+    </style>
+
+    <!-- ScrollView с часто используемыми значениями (0dp/0dp, fillViewport=true) -->
+    <style name="DarkScrollViewConstraint">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:fillViewport">true</item>
+    </style>
+
+    <!-- ============== CARDVIEW СТИЛИ ============== -->
+    <!-- Карточка с corner=20dp, elevation=8dp -->
+    <style name="DarkCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardBackgroundColor">@color/darkCardBackground</item>
+    </style>
+
+    <!-- Карточка с повышенной тенью (для форм) -->
+    <style name="DarkCardViewStyleElevated" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">20dp</item>
+        <item name="cardBackgroundColor">@color/darkCardBackground</item>
+    </style>
+
+    <!-- Карточка для PersonalData с corner=16dp -->
+    <style name="DarkCardViewStyleCorner16" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardBackgroundColor">@color/darkCardBackground</item>
+    </style>
+
+    <!-- Карточка для маленьких элементов (например, в списке оценок или статистики) -->
+    <style name="MaterialCardItem" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeColor">@color/surface_variant</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- ============== BUTTON СТИЛИ ============== -->
+    <!-- Заливная кнопка с фоном darkAccent -->
+    <style name="ButtonDarkAccent" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/darkAccent</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <!-- Заливная красная кнопка (для удаления) -->
+    <style name="ButtonRedAccent" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/red</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <!-- Outlined кнопка с обводкой darkAccent -->
+    <style name="ButtonOutlinedDarkAccent" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="strokeColor">@color/darkAccent</item>
+        <item name="iconTint">@android:color/white</item>
+        <item name="backgroundTint">@color/darkCardBackground</item>
+    </style>
+
+    <!-- Кнопка с высотой 60dp (например, в формах авторизации/регистрации) -->
+    <style name="ButtonDarkAccentLarge" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/darkAccent</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <!-- ============== TEXTINPUTLAYOUT / EDITTEXT СТИЛИ ============== -->
+    <!-- Стиль для TextInputLayout с OutlinedBox и boxStrokeColor -->
+    <style name="OutlinedBoxDarkAccent" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Заметьте, layout_width/height остаются в XML -->
+        <item name="boxStrokeColor">@color/darkAccent</item>
+    </style>
+
+    <!-- Стиль для TextInputEditText -->
+    <style name="DarkTextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Стиль для TextInputEditText с дополнительным hint -->
+    <style name="DarkTextInputEditTextHinted">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">#9E9E9E</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- ============== TEXTVIEW СТИЛИ ============== -->
+    <style name="DarkTitle24Text">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkAccent</item>
+    </style>
+
+    <style name="DarkTitle32Text" parent="DarkTitle28Text">
+        <item name="android:textSize">32sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="DarkTitle28Text">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkAccent</item>
+    </style>
+
+    <style name="DarkTitle36Text">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkAccent</item>
+    </style>
+
+    <!-- Новый стиль для заголовков в горизонтальной разметке, если требуется 26sp -->
+    <style name="DarkTitle26Text">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkAccent</item>
+    </style>
+
+    <style name="DarkTitle20CenterBold">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="WhiteBody16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteBody14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Для FilledBox ExposedDropdownMenu, если требуется в TeacherSetGradeFragment -->
+    <style name="FilledBoxDropdownDark" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/darkCardBackground</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
+
+</resources>
