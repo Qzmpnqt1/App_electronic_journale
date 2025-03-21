@@ -1,12 +1,14 @@
 package com.example.electronic_journal.fragment.entity
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -68,6 +70,20 @@ class AdministratorFragment : Fragment() {
 
         binding.btLogout.setOnClickListener {
             confirmLogout() // Диалог подтверждения выхода
+        }
+
+        binding.btChangeTheme?.setOnClickListener {
+            val newMode = if ((requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                AppCompatDelegate.MODE_NIGHT_YES
+            }
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            // Сохранение выбранного режима
+            val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+            sharedPref.edit().putInt("theme_mode", newMode).apply()
+
+            requireActivity().recreate()
         }
 
         binding.btAddGroup.setOnClickListener {

@@ -31,7 +31,7 @@ class MistralAuthInterceptor : Interceptor {
 }
 
 object WebServerSingleton {
-    private const val WEB_SRV_URL = "http://192.168.0.88:8080/" // Проверьте адрес
+    private const val WEB_SRV_URL = "http://192.168.0.97:8080/" // Проверьте адрес
 
     fun getApiService(context: Context): ApiService {
         val authInterceptor = AuthInterceptor(context)

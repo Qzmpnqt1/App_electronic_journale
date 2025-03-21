@@ -38,8 +38,7 @@ class AdministratorSearchViewModel(application: Application) : AndroidViewModel(
     fun sendQuery(query: String) {
         _lastQuery.value = query
         _isLoading.value = true
-        _errorOccurred.value = false  // Сбрасываем флаг ошибки перед новым запросом
-        _answerText.value = "Ожидание ответа..."
+        _errorOccurred.value = false
 
         viewModelScope.launch {
             try {

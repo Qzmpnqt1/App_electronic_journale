@@ -1,25 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Те же самые имена цветов, что и в values/colors.xml,
-         но "настоящие" тёмные значения для Night Mode. -->
-
+    <!-- Ваши существующие цвета -->
     <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="purple">#8692f7</color>
     <color name="red">#CD5C5C</color>
-
-    <!-- Возвращаем "тёмные" значения -->
     <color name="dark_background">#121212</color>
     <color name="darkCardBackground">#1E1E1E</color>
     <color name="darkAccent">#BB86FC</color>
-    <color name="white">#FFFFFF</color> <!-- Текст и иконки в ночном режиме белые -->
-
-    <color name="primaryDarkColor">#BB86FC</color>
+    <color name="white">#FFFFFF</color>
+    <color name="primaryDarkColor">#6200EE</color>
     <color name="secondaryTextColor">#757575</color>
     <color name="dividerColor">#E0E0E0</color>
+    <color name="outline">#79747E</color>
 
-    <!-- M3-цвета при желании можно сделать темнее, если используете их напрямую -->
+    <!-- Цвета Material Design 3 -->
     <color name="md_theme_light_outline">#79747E</color>
     <color name="md_theme_light_primary">#6750A4</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
@@ -28,39 +27,13 @@
     <color name="md_theme_light_surface">#FFFBFE</color>
     <color name="md_theme_light_onSurface">#1C1B1F</color>
 
-    <color name="surface_variant">#E7E0EC</color>
+    <!-- Добавленные цвета для Material Design 3 -->
+    <color name="surface_variant">#E7E0EC</color> <!-- Пример цвета для surface_variant -->
+    <color name="colorOnSurface">#1C1B1F</color> <!-- Цвет текста на поверхности -->
+    <color name="colorSurface">#FFFBFE</color>   <!-- Цвет поверхности -->
+    <color name="colorPrimary">#6750A4</color>   <!-- Основной цвет -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- Цвет текста на основном цвете -->
+
     <color name="lightGray">#B3B3B3</color>
+
 </resources>
-
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="purple">#8692f7</color>
-    <color name="red">#CD5C5C</color>
-
-    <color name="dark_background">#FFFFFF</color>
-    <color name="darkCardBackground">#F2F2F2</color>
-    <color name="darkAccent">#BB86FC</color>
-    <color name="white">#000000</color>
-
-    <color name="primaryDarkColor">#BB86FC</color>
-    <color name="secondaryTextColor">#757575</color>
-    <color name="dividerColor">#E0E0E0</color>
-
-
-    <color name="md_theme_light_outline">#79747E</color>
-    <color name="md_theme_light_primary">#6750A4</color>
-    <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#EADDFF</color>
-    <color name="md_theme_light_onPrimaryContainer">#21005D</color>
-    <color name="md_theme_light_surface">#FFFBFE</color>
-    <color name="md_theme_light_onSurface">#1C1B1F</color>
-
-    <color name="surface_variant">#E7E0EC</color>
-    <color name="lightGray">#B3B3B3</color>
-        </resources> -->
-

@@ -86,13 +86,23 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Новая кнопка для смены темы -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btChangeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ButtonOutlinedDarkAccent"
+                android:layout_marginTop="80dp"
+                android:text="@string/change_theme"
+                android:layout_gravity="center" />
+
             <!-- Кнопка выхода -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/ButtonOutlinedDarkAccent"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center"
                 app:iconGravity="textEnd"
                 app:icon="@drawable/ic_logout"

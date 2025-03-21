@@ -101,4 +101,5 @@
 
     <string name="stats_header">Статистика по группе</string>
     <string name="view_stats">Посмотреть статистику</string>
+    <string name="change_theme">Сменить тему</string>
 </resources>

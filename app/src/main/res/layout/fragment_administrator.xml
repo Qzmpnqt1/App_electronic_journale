@@ -445,6 +445,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Текст с поиском (tvSearch) -->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvSearch"
                 android:layout_width="wrap_content"
@@ -459,23 +460,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Кнопка выхода -->
+            <!-- Кнопка смены темы (btChangeTheme) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btChangeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ButtonOutlinedDarkAccent"
+                android:layout_marginTop="16dp"
+                android:text="@string/change_theme"
+                app:layout_constraintTop_toBottomOf="@id/tvSearch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Кнопка выхода (btLogout) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/ButtonOutlinedDarkAccent"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="12dp"
                 android:text="@string/logout_from_account"
                 app:icon="@drawable/ic_logout"
                 app:iconTint="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btChangeTheme"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardManageStudents" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

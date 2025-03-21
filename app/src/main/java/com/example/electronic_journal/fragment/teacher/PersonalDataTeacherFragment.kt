@@ -1,6 +1,7 @@
 package com.example.electronic_journal.fragment.teacher
 
 import android.content.Context
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
@@ -94,6 +96,21 @@ class PersonalDataTeacherFragment : Fragment() {
         binding.btLogout.setOnClickListener {
             confirmLogout()
         }
+
+        binding.btChangeTheme?.setOnClickListener {
+            val newMode = if ((requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                AppCompatDelegate.MODE_NIGHT_YES
+            }
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            // Сохранение выбранного режима
+            val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+            sharedPref.edit().putInt("theme_mode", newMode).apply()
+
+            requireActivity().recreate()
+        }
+
         return binding.root
     }
 

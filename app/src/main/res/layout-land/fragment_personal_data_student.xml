@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DarkBackgroundConstraintLayout"
-    tools:context=".fragment.teacher.PersonalDataStudentFragment">
+    tools:context=".fragment.student.PersonalDataStudentFragment">
 
     <!-- Основной контент в ScrollView -->
     <ScrollView
@@ -32,8 +32,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="@color/darkAccent"
-                android:gravity="center"
-                android:paddingVertical="16dp"/>
+                android:gravity="center"/>
 
             <!-- ImageView для фото профиля -->
             <ImageView
@@ -46,12 +45,11 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/circle_background"/>
 
-            <!-- Карточка с информацией учителя -->
+            <!-- Карточка с информацией студента -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
                 style="@style/DarkCardViewStyleCorner16">
 
                 <LinearLayout
@@ -88,14 +86,25 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Новая кнопка для смены темы -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btChangeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ButtonOutlinedDarkAccent"
+                android:layout_marginTop="10dp"
+                android:text="Сменить тему"
+                android:layout_gravity="center" />
+
             <!-- Кнопка выхода -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btLogout"
                 style="@style/ButtonOutlinedDarkAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"/>
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
